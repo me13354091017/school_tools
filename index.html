@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>教学辅助工具索引</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
             background-color: #faf7f2;
@@ -18,130 +13,51 @@
             line-height: 1.6;
             padding-bottom: 60px;
         }
-
-        .page-header {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px 20px;
-        }
-
-        .page-header h1 {
-            font-size: 28px;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .page-header p {
-            color: #777;
-            font-size: 14px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .category {
-            margin-bottom: 36px;
-        }
-
+        .page-header { max-width: 900px; margin: 0 auto; padding: 40px 20px 20px; }
+        .page-header h1 { font-size: 28px; font-weight: 600; margin-bottom: 10px; }
+        .page-header p { color: #777; font-size: 14px; }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        .category { margin-bottom: 36px; }
         .category-title {
-            font-size: 18px;
-            font-weight: 600;
-            padding-bottom: 8px;
-            margin-bottom: 16px;
-            border-bottom: 1px solid #e8e4dc;
-            color: #444;
+            font-size: 18px; font-weight: 600; padding-bottom: 8px;
+            margin-bottom: 16px; border-bottom: 1px solid #e8e4dc; color: #444;
         }
-
-        .card-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
-        }
-
+        .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
         .tool-card {
-            background: #ffffff;
-            border: 1px solid #ece8e0;
-            border-radius: 8px;
-            padding: 16px 18px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            transition: all 0.2s ease;
+            background: #ffffff; border: 1px solid #ece8e0; border-radius: 8px;
+            padding: 16px 18px; display: flex; justify-content: space-between;
+            align-items: flex-start; transition: all 0.2s ease;
         }
-
-        .tool-card:hover {
-            border-color: #d8d2c6;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-
-        .tool-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .tool-name {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: #222;
-        }
-
-        .tool-desc {
-            font-size: 13px;
-            color: #888;
-        }
-
+        .tool-card:hover { border-color: #d8d2c6; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+        .tool-info { flex: 1; min-width: 0; }
+        .tool-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #222; }
+        .tool-desc { font-size: 13px; color: #888; }
         .project-btn {
-            flex-shrink: 0;
-            margin-left: 12px;
-            padding: 4px 10px;
-            font-size: 12px;
-            color: #999;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            text-decoration: none;
-            background: #fdfcf9;
-            transition: all 0.2s;
+            flex-shrink: 0; margin-left: 12px; padding: 4px 10px; font-size: 12px;
+            color: #999; border: 1px solid #ddd; border-radius: 4px;
+            text-decoration: none; background: #fdfcf9; transition: all 0.2s;
             white-space: nowrap;
         }
-
-        .project-btn:hover {
-            color: #666;
-            border-color: #bbb;
-            background: #f8f6f1;
-        }
-
+        .project-btn:hover { color: #666; border-color: #bbb; background: #f8f6f1; }
         .footer {
-            text-align: center;
-            color: #aaa;
-            font-size: 13px;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
+            text-align: center; color: #aaa; font-size: 13px;
+            margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;
         }
-
-        @media (max-width: 720px) {
-            .card-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        @media (max-width: 720px) { .card-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
 <div class="page-header">
     <h1>教学辅助工具索引</h1>
-    <p>专门向大连教育学院附属中学提供经过测试以及个人推荐的教学辅助应用程序，也欢迎外校前来查看，感谢智教联盟提供大量相关软件。
-本人是一名高一学生（七班）
-欢迎各位大佬指出问题与建议谢谢，这是我整理智教联盟开源工具 · 点击项目地址直达 GitHub 仓库（可能有部分软件存在问题，可以向我或作者反馈）</p>
+    <p>专门向大连教育学院附属中学提供经过测试以及个人推荐的教学辅助应用程序，也欢迎外校前来查看，感谢智教联盟提供大量相关软件。<br>
+    本人是一名高一学生（七班）。<br>
+    欢迎各位大佬指出问题与建议，谢谢！整理自智教联盟开源工具 · 点击项目地址直达 GitHub 仓库（可能有部分软件存在问题，可以向我或作者反馈）。</p>
 </div>
 
 <div class="container">
 
-    <!-- 课表软件 -->
+    <!-- ============ 课表软件 ============ -->
     <div class="category">
         <div class="category-title">课表软件</div>
         <div class="card-grid">
@@ -257,10 +173,17 @@
                 </div>
                 <a class="project-btn" href="https://github.com/ziyi127/TimeNest" target="_blank">项目地址</a>
             </div>
+            <div class="tool-card">
+                <div class="tool-info">
+                    <div class="tool-name">Class-Widgets-2</div>
+                    <div class="tool-desc">桌面悬浮课表小组件，铃声提醒、插件扩展，Windows / Linux</div>
+                </div>
+                <a class="project-btn" href="https://github.com/RinLit-233-shiroko/Class-Widgets-2" target="_blank">项目地址</a>
+            </div>
         </div>
     </div>
 
-    <!-- 希沃相关 -->
+    <!-- ============ 希沃相关 ============ -->
     <div class="category">
         <div class="category-title">希沃相关</div>
         <div class="card-grid">
@@ -379,7 +302,7 @@
         </div>
     </div>
 
-    <!-- 教学批注 -->
+    <!-- ============ 教学批注 ============ -->
     <div class="category">
         <div class="category-title">教学批注</div>
         <div class="card-grid">
@@ -519,7 +442,7 @@
         </div>
     </div>
 
-    <!-- 学习辅助 -->
+    <!-- ============ 学习辅助 ============ -->
     <div class="category">
         <div class="category-title">学习辅助</div>
         <div class="card-grid">
@@ -631,7 +554,7 @@
         </div>
     </div>
 
-    <!-- 随机抽签与计票 -->
+    <!-- ============ 随机抽签与计票 ============ -->
     <div class="category">
         <div class="category-title">随机抽签与计票</div>
         <div class="card-grid">
@@ -750,7 +673,7 @@
         </div>
     </div>
 
-    <!-- 班级管理 -->
+    <!-- ============ 班级管理 ============ -->
     <div class="category">
         <div class="category-title">班级管理</div>
         <div class="card-grid">
@@ -848,7 +771,7 @@
         </div>
     </div>
 
-    <!-- 触屏辅助 -->
+    <!-- ============ 触屏辅助 ============ -->
     <div class="category">
         <div class="category-title">触屏辅助</div>
         <div class="card-grid">
@@ -918,7 +841,7 @@
         </div>
     </div>
 
-    <!-- 行为限制 -->
+    <!-- ============ 行为限制 ============ -->
     <div class="category">
         <div class="category-title">行为限制</div>
         <div class="card-grid">
@@ -953,7 +876,7 @@
         </div>
     </div>
 
-    <!-- 网络通信 -->
+    <!-- ============ 网络通信 ============ -->
     <div class="category">
         <div class="category-title">网络通信</div>
         <div class="card-grid">
@@ -1016,7 +939,7 @@
         </div>
     </div>
 
-    <!-- 大屏与考场时钟 -->
+    <!-- ============ 大屏与考场时钟 ============ -->
     <div class="category">
         <div class="category-title">大屏与考场时钟</div>
         <div class="card-grid">
@@ -1079,7 +1002,7 @@
         </div>
     </div>
 
-    <!-- 倒计时与进度 -->
+    <!-- ============ 倒计时与进度 ============ -->
     <div class="category">
         <div class="category-title">倒计时与进度</div>
         <div class="card-grid">
@@ -1142,7 +1065,7 @@
         </div>
     </div>
 
-    <!-- 公告作业值日面板 -->
+    <!-- ============ 公告作业值日面板 ============ -->
     <div class="category">
         <div class="category-title">公告作业值日面板</div>
         <div class="card-grid">
@@ -1233,7 +1156,7 @@
         </div>
     </div>
 
-    <!-- 桌面皮肤与小部件 -->
+    <!-- ============ 桌面皮肤与小部件 ============ -->
     <div class="category">
         <div class="category-title">桌面皮肤与小部件</div>
         <div class="card-grid">
@@ -1289,7 +1212,7 @@
         </div>
     </div>
 
-    <!-- 网页与站点 -->
+    <!-- ============ 网页与站点项目 ============ -->
     <div class="category">
         <div class="category-title">网页与站点项目</div>
         <div class="card-grid">
