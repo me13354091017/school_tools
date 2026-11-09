@@ -20,7 +20,12 @@
         .announcement-board {
             max-width: 860px; margin: 0 auto 32px; padding: 20px 22px;
             background: #fff; border: 1px solid #ece8e0; border-radius: 8px;
+            cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s;
         }
+        .announcement-board:hover, .announcement-board:focus-visible {
+            border-color: #d8d2c6; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .announcement-board:focus-visible { outline: 2px solid #98764e; outline-offset: 2px; }
         .announcement-heading {
             display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
             font-size: 18px; font-weight: 600; color: #444;
@@ -30,7 +35,7 @@
             color: #98764e; font-size: 11px; font-weight: 500;
         }
         .announcement-list { list-style: none; }
-        .announcement-item:nth-child(n + 6) { display: none; }
+        .announcement-board .announcement-item:nth-child(n + 6) { display: none; }
         .announcement-item {
             display: grid; grid-template-columns: 90px 1fr; gap: 14px;
             padding: 10px 0; border-top: 1px solid #f0ede7;
@@ -41,6 +46,10 @@
             width: min(440px, calc(100% - 32px)); margin: auto; padding: 28px;
             border: 1px solid #ece8e0; border-radius: 12px; color: #333;
             background: #fff; box-shadow: 0 16px 48px rgba(0,0,0,0.18);
+        }
+        .announcements-dialog {
+            width: min(620px, calc(100% - 32px));
+            max-height: min(80vh, 720px); overflow-y: auto;
         }
         .welcome-dialog::backdrop { background: rgba(35, 31, 25, 0.48); }
         .welcome-dialog h2 { margin-bottom: 6px; font-size: 22px; font-weight: 600; }
@@ -96,7 +105,9 @@
     欢迎各位大佬指出问题与建议，谢谢！整理自智教联盟开源工具 · 点击项目地址直达 GitHub 仓库（可能有部分软件存在问题，可以向我或作者反馈）。</p>
 </div>
 
-<section class="announcement-board" aria-labelledby="announcement-title">
+<section class="announcement-board" aria-labelledby="announcement-title"
+    role="button" tabindex="0" aria-haspopup="dialog" aria-controls="announcements-dialog"
+    aria-label="查看全部公告和更新日志">
     <h2 class="announcement-heading" id="announcement-title">
         公告栏 <span class="announcement-label">更新日志</span>
     </h2>
@@ -137,6 +148,16 @@
     </div>
     <form method="dialog">
         <button class="welcome-close" type="submit">开始浏览</button>
+    </form>
+</dialog>
+
+<dialog class="welcome-dialog announcements-dialog" id="announcements-dialog"
+    aria-labelledby="announcements-title" aria-describedby="all-announcements">
+    <h2 id="announcements-title">公告与更新日志</h2>
+    <p class="welcome-intro">全部公告与更新记录</p>
+    <ul class="announcement-list" id="all-announcements"></ul>
+    <form method="dialog">
+        <button class="welcome-close" type="submit">关闭</button>
     </form>
 </dialog>
 
@@ -1346,8 +1367,25 @@
 </div>
 
 <script>
+    const announcementBoard = document.querySelector(".announcement-board");
+    const announcementsDialog = document.getElementById("announcements-dialog");
+    const allAnnouncements = document.getElementById("all-announcements");
     const latestAnnouncement = document.querySelector(".announcement-item");
     const welcomeDialog = document.getElementById("welcome-dialog");
+
+    if (announcementBoard && announcementsDialog && allAnnouncements) {
+        announcementBoard.querySelectorAll(".announcement-item").forEach((announcement) => {
+            allAnnouncements.append(announcement.cloneNode(true));
+        });
+
+        announcementBoard.addEventListener("click", () => announcementsDialog.showModal());
+        announcementBoard.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                announcementsDialog.showModal();
+            }
+        });
+    }
 
     if (latestAnnouncement && welcomeDialog) {
         document.getElementById("welcome-date").textContent =
