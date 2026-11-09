@@ -98,8 +98,13 @@
         .tool-info { flex: 1; min-width: 0; }
         .tool-icon {
             width: 42px; height: 42px; flex: 0 0 42px; display: grid;
-            place-items: center; margin-right: 12px; border-radius: 10px;
+            position: relative; overflow: hidden; place-items: center;
+            margin-right: 12px; border-radius: 10px;
             background: #f5eee2; font-size: 21px;
+        }
+        .tool-icon img {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            padding: 3px; object-fit: contain; background: #fff;
         }
         .tool-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #222; }
         .tool-desc { font-size: 13px; color: #888; }
@@ -137,6 +142,10 @@
         公告栏（点击打开全部日志） <span class="announcement-label">更新日志</span>
     </h2>
     <ul class="announcement-list">
+        <li class="announcement-item">
+            <time datetime="2026-11-09">2026-11-09</time>
+            <p class="announcement-content">为应用卡片添加项目专属图标；暂无可用图标的项目继续显示分类图标。</p>
+        </li>
         <li class="announcement-item">
             <time datetime="2026-11-09">2026-11-09</time>
             <p class="announcement-content">新增“ClassIsland 集控软件”栏目，收录 RemoteCI、MiniClassIsland 和 ClassislandControlHub。</p>
@@ -1455,6 +1464,37 @@
         "网页与站点项目": "🌍"
     };
 
+    const repositoryIcons = {
+        "classisland/classisland": "https://raw.githubusercontent.com/ClassIsland/ClassIsland/HEAD/ClassIsland/Assets/AppLogo_AppLogo.svg",
+        "sectl/secrandom": "https://raw.githubusercontent.com/SECTL/SecRandom/HEAD/resources/secrandom-icon-paper.png",
+        "1siancl/classislandcontrolhub": "https://raw.githubusercontent.com/1sIancl/ClassislandControlHub/HEAD/docs/images/logo.png",
+        "xwzkj/cheeseschedule": "https://raw.githubusercontent.com/xwzkj/CheeseSchedule/HEAD/src-tauri/icons/64x64.png",
+        "class-widgets/class-widgets": "https://raw.githubusercontent.com/Class-Widgets/Class-Widgets/HEAD/img/Logo.png",
+        "yu322142/class-widgets-1_plus": "https://raw.githubusercontent.com/YU322142/Class-Widgets-1_plus/HEAD/img/Logo.png",
+        "enigfrank/electronclassschedulex": "https://raw.githubusercontent.com/Enigfrank/ElectronClassScheduleX/HEAD/src/image/icon.png",
+        "gpuawa/iclass": "https://raw.githubusercontent.com/gpuawa/iClass/HEAD/resources/images/icon.png",
+        "jursin/schedule-vela": "https://raw.githubusercontent.com/Jursin/Schedule-Vela/HEAD/src/common/logo.png",
+        "rinlit-233-shiroko/class-widgets-2": "https://raw.githubusercontent.com/RinLit-233-shiroko/Class-Widgets-2/HEAD/assets/images/logo.png",
+        "hellogaoo/seevvodownloader": "https://raw.githubusercontent.com/HelloGaoo/SeevvoDownloader/HEAD/icon/003.ico",
+        "sectl/luminalium-2": "https://raw.githubusercontent.com/SECTL/Luminalium-2/HEAD/docs/logo.svg",
+        "enigfrank/steady-ink": "https://raw.githubusercontent.com/Enigfrank/Steady-Ink/HEAD/assets/steady-ink-icon.svg",
+        "sectl/viewpdf": "https://github.com/SECTL/ViewPDF/blob/main/src-tauri/icons/Square1024x1024Logo.png?raw=true",
+        "alan-crl/inkeys": "https://raw.githubusercontent.com/Alan-CRL/Inkeys/HEAD/GithubRes/logo.png",
+        "qqhkx/immersive-clock-monitor": "https://raw.githubusercontent.com/QQHKX/Immersive-clock-monitor/HEAD/public/favicon.svg",
+        "xuanxuan1231/smartedu-helper": "https://raw.githubusercontent.com/xuanxuan1231/smartedu-helper/HEAD/assets/icon.png",
+        "namepickerorg/namepicker": "https://raw.githubusercontent.com/NamePickerOrg/NamePicker/HEAD/assets/NamePicker.png",
+        "winfunan/verirandom": "https://raw.githubusercontent.com/WinFunan/VeriRandom/HEAD/resources/secrandom-icon-paper.png",
+        "jin-ct/easytouch": "https://raw.githubusercontent.com/jin-ct/easytouch/HEAD/icon/icon.ico",
+        "rinlit-233-shiroko/powerpoint-touch-assist": "https://raw.githubusercontent.com/RinLit-233-shiroko/PowerPoint-Touch-Assist/HEAD/img/logo.png",
+        "wrmyx/rimenotice": "https://raw.githubusercontent.com/WRMYX/RimeNotice/HEAD/RimeNotice/Assets/RimeNotice-Logo.svg",
+        "pyteachconnect/teachconnect": "https://raw.githubusercontent.com/pyTeachConnect/TeachConnect/HEAD/TC-img/favicon.png",
+        "qziky/immersive-clock": "https://raw.githubusercontent.com/Qziky/Immersive-clock/HEAD/public/favicon.svg",
+        "sectl/corkboard": "https://raw.githubusercontent.com/SECTL/Corkboard/HEAD/resources/corkboard-icon.png",
+        "bearwhite-z/daily-commission-panel": "https://raw.githubusercontent.com/BearWhite-Z/Daily-Commission-Panel/HEAD/Assets/DCP%20%E5%9B%BE%E6%A0%87.svg",
+        "creeperisaspy/fullscreennotice": "https://raw.githubusercontent.com/CreeperIsASpy/FullScreenNotice/HEAD/storage/data/favicon.png",
+        "zongzitek/zongzitek-blackboard-sticker": "https://github.com/STBBRD/ZongziTEK-Blackboard-Sticker/blob/master/ZongziTEK_Blackboard_Sticker/%E9%BB%91%E6%9D%BF%E8%B4%B4.png?raw=true"
+    };
+
     document.querySelectorAll(".category").forEach((category) => {
         const title = category.querySelector(".category-title")?.textContent.trim();
         const icon = categoryIcons[title] || "💻";
@@ -1464,6 +1504,20 @@
             toolIcon.className = "tool-icon";
             toolIcon.setAttribute("aria-hidden", "true");
             toolIcon.textContent = icon;
+
+            const projectLink = card.querySelector(".project-btn");
+            const repository = projectLink?.href.match(/github\.com\/([^/]+\/[^/?#]+)/i)?.[1].toLowerCase();
+            const iconUrl = repository && repositoryIcons[repository];
+            if (iconUrl) {
+                const image = document.createElement("img");
+                image.src = iconUrl;
+                image.alt = "";
+                image.loading = "lazy";
+                image.decoding = "async";
+                image.onerror = () => image.remove();
+                toolIcon.append(image);
+            }
+
             card.prepend(toolIcon);
         });
     });
