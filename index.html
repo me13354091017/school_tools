@@ -30,6 +30,7 @@
             color: #98764e; font-size: 11px; font-weight: 500;
         }
         .announcement-list { list-style: none; }
+        .announcement-item:nth-child(n + 6) { display: none; }
         .announcement-item {
             display: grid; grid-template-columns: 90px 1fr; gap: 14px;
             padding: 10px 0; border-top: 1px solid #f0ede7;
@@ -85,6 +86,14 @@
     <ul class="announcement-list">
         <li class="announcement-item">
             <time datetime="2026-11-09">2026-11-09</time>
+            <p class="announcement-content">调整公告栏显示，最多展示 5 条更新日志。</p>
+        </li>
+        <li class="announcement-item">
+            <time datetime="2026-11-09">2026-11-09</time>
+            <p class="announcement-content">在“最佳教室搭配”栏目中添加 SecRandom。</p>
+        </li>
+        <li class="announcement-item">
+            <time datetime="2026-11-09">2026-11-09</time>
             <p class="announcement-content">在“最佳教室搭配”栏目中添加 ClassIsland。</p>
         </li>
         <li class="announcement-item">
@@ -106,6 +115,13 @@
                     <div class="tool-desc">桌面课表与课堂辅助工具</div>
                 </div>
                 <a class="project-btn" href="https://github.com/ClassIsland/ClassIsland" target="_blank">项目地址</a>
+            </div>
+            <div class="tool-card">
+                <div class="tool-info">
+                    <div class="tool-name">SecRandom</div>
+                    <div class="tool-desc">基于动态权重的公平随机工具</div>
+                </div>
+                <a class="project-btn" href="https://github.com/SECTL/SecRandom" target="_blank">项目地址</a>
             </div>
         </div>
     </div>
