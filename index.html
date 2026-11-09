@@ -92,10 +92,15 @@
         .tool-card {
             background: #ffffff; border: 1px solid #ece8e0; border-radius: 8px;
             padding: 16px 18px; display: flex; justify-content: space-between;
-            align-items: flex-start; transition: all 0.2s ease;
+            align-items: center; transition: all 0.2s ease;
         }
         .tool-card:hover { border-color: #d8d2c6; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
         .tool-info { flex: 1; min-width: 0; }
+        .tool-icon {
+            width: 42px; height: 42px; flex: 0 0 42px; display: grid;
+            place-items: center; margin-right: 12px; border-radius: 10px;
+            background: #f5eee2; font-size: 21px;
+        }
         .tool-name { font-size: 15px; font-weight: 600; margin-bottom: 4px; color: #222; }
         .tool-desc { font-size: 13px; color: #888; }
         .project-btn {
@@ -1431,6 +1436,38 @@
 </div>
 
 <script>
+    const categoryIcons = {
+        "最佳教室搭配": "✨",
+        "ClassIsland 集控软件": "🛰️",
+        "课表软件": "🗓️",
+        "希沃相关": "🖥️",
+        "教学批注": "✏️",
+        "学习辅助": "📚",
+        "随机抽签与计票": "🎲",
+        "班级管理": "🏫",
+        "触屏辅助": "👆",
+        "行为限制": "🔒",
+        "网络通信": "🌐",
+        "大屏与考场时钟": "📺",
+        "倒计时与进度": "⏱️",
+        "公告作业值日面板": "📋",
+        "桌面皮肤与小部件": "🧩",
+        "网页与站点项目": "🌍"
+    };
+
+    document.querySelectorAll(".category").forEach((category) => {
+        const title = category.querySelector(".category-title")?.textContent.trim();
+        const icon = categoryIcons[title] || "💻";
+
+        category.querySelectorAll(".tool-card").forEach((card) => {
+            const toolIcon = document.createElement("span");
+            toolIcon.className = "tool-icon";
+            toolIcon.setAttribute("aria-hidden", "true");
+            toolIcon.textContent = icon;
+            card.prepend(toolIcon);
+        });
+    });
+
     const announcementBoard = document.querySelector(".announcement-board");
     const announcementsDialog = document.getElementById("announcements-dialog");
     const allAnnouncements = document.getElementById("all-announcements");
