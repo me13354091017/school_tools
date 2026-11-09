@@ -17,6 +17,25 @@
         .page-header h1 { font-size: 28px; font-weight: 600; margin-bottom: 10px; }
         .page-header p { color: #777; font-size: 14px; }
         .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        .announcement-board {
+            max-width: 860px; margin: 0 auto 32px; padding: 20px 22px;
+            background: #fff; border: 1px solid #ece8e0; border-radius: 8px;
+        }
+        .announcement-heading {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+            font-size: 18px; font-weight: 600; color: #444;
+        }
+        .announcement-label {
+            padding: 2px 8px; border-radius: 4px; background: #f5eee2;
+            color: #98764e; font-size: 11px; font-weight: 500;
+        }
+        .announcement-list { list-style: none; }
+        .announcement-item {
+            display: grid; grid-template-columns: 90px 1fr; gap: 14px;
+            padding: 10px 0; border-top: 1px solid #f0ede7;
+        }
+        .announcement-item time { color: #999; font-size: 13px; }
+        .announcement-content { color: #666; font-size: 14px; }
         .category { margin-bottom: 36px; }
         .category-title {
             font-size: 18px; font-weight: 600; padding-bottom: 8px;
@@ -44,6 +63,10 @@
             margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;
         }
         @media (max-width: 720px) { .card-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 480px) {
+            .announcement-board { margin: 0 20px 28px; padding: 16px; }
+            .announcement-item { grid-template-columns: 1fr; gap: 2px; }
+        }
     </style>
 </head>
 <body>
@@ -54,6 +77,18 @@
     本人是一名高一学生（七班）。<br>
     欢迎各位大佬指出问题与建议，谢谢！整理自智教联盟开源工具 · 点击项目地址直达 GitHub 仓库（可能有部分软件存在问题，可以向我或作者反馈）。</p>
 </div>
+
+<section class="announcement-board" aria-labelledby="announcement-title">
+    <h2 class="announcement-heading" id="announcement-title">
+        公告栏 <span class="announcement-label">更新日志</span>
+    </h2>
+    <ul class="announcement-list">
+        <li class="announcement-item">
+            <time datetime="2026-11-09">2026-11-09</time>
+            <p class="announcement-content">新增更新日志公告栏，后续页面更新将在此发布。</p>
+        </li>
+    </ul>
+</section>
 
 <div class="container">
 
