@@ -83,7 +83,29 @@
             font: inherit; cursor: pointer;
         }
         .welcome-close:hover { background: #6d5940; }
-        .category { margin-bottom: 36px; }
+        .quick-nav {
+            position: fixed; z-index: 5; top: 50%;
+            left: max(16px, calc((100vw - 1300px) / 2));
+            width: 170px; max-height: calc(100vh - 40px); overflow-y: auto;
+            padding: 14px 10px; transform: translateY(-50%);
+            border: 1px solid #ece8e0; border-radius: 8px; background: #fff;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+        }
+        .quick-nav-title {
+            padding: 0 8px 8px; color: #888; font-size: 12px;
+            font-weight: 600; letter-spacing: 0.04em;
+        }
+        .quick-nav-list { display: grid; gap: 2px; list-style: none; }
+        .quick-nav a {
+            display: block; padding: 6px 8px; border-radius: 5px;
+            color: #666; font-size: 13px; line-height: 1.4;
+            text-decoration: none; transition: background 0.2s, color 0.2s;
+        }
+        .quick-nav a:hover, .quick-nav a:focus-visible {
+            color: #6d5940; background: #f5eee2;
+        }
+        .quick-nav a:focus-visible { outline: 2px solid #98764e; outline-offset: 1px; }
+        .category { margin-bottom: 36px; scroll-margin-top: 24px; }
         .category-title {
             font-size: 18px; font-weight: 600; padding-bottom: 8px;
             margin-bottom: 16px; border-bottom: 1px solid #e8e4dc; color: #444;
@@ -120,6 +142,24 @@
             margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;
         }
         @media (max-width: 720px) { .card-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 1359px) {
+            .quick-nav {
+                position: static; width: min(900px, calc(100% - 40px));
+                max-height: none; margin: 0 auto 24px; padding: 10px 12px;
+                transform: none;
+            }
+            .quick-nav-title { padding: 0 4px 6px; }
+            .quick-nav-list {
+                display: flex; gap: 6px; overflow-x: auto;
+                scrollbar-width: none;
+            }
+            .quick-nav-list::-webkit-scrollbar { display: none; }
+            .quick-nav a { white-space: nowrap; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .quick-nav a { transition: none; }
+        }
         @media (max-width: 480px) {
             .announcement-board { margin: 0 20px 28px; padding: 16px; }
             .announcement-item { grid-template-columns: 1fr; gap: 2px; }
@@ -142,6 +182,10 @@
         公告栏 <span class="announcement-label">更新日志</span>
     </h2>
     <ul class="announcement-list">
+        <li class="announcement-item">
+            <time datetime="2026-11-09">2026-11-09</time>
+            <p class="announcement-content">新增左侧栏目快捷导航，方便快速跳转；窄屏下导航改为顶部横向滚动。</p>
+        </li>
         <li class="announcement-item">
             <time datetime="2026-11-09">2026-11-09</time>
             <p class="announcement-content">更新 ClassIsland 插件简介，展示每个插件的具体功能。</p>
@@ -226,6 +270,11 @@
         <button class="welcome-close" type="submit">关闭</button>
     </form>
 </dialog>
+
+<nav class="quick-nav" aria-label="栏目快捷导航">
+    <div class="quick-nav-title">快速导航</div>
+    <ul class="quick-nav-list" id="quick-nav-list"></ul>
+</nav>
 
 <div class="container">
 
@@ -1636,6 +1685,22 @@
 
         card.append(info, projectLink);
         classIslandV2PluginGrid.append(card);
+    });
+
+    const quickNavList = document.getElementById("quick-nav-list");
+    document.querySelectorAll(".category").forEach((category, index) => {
+        const title = category.querySelector(".category-title")?.textContent.trim();
+        if (!title) return;
+
+        const id = `category-${index + 1}`;
+        category.id = id;
+
+        const item = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = `#${id}`;
+        link.textContent = title;
+        item.append(link);
+        quickNavList.append(item);
     });
 
     const categoryIcons = {
