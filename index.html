@@ -142,20 +142,6 @@
             margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;
         }
         @media (max-width: 720px) { .card-grid { grid-template-columns: 1fr; } }
-        @media (max-width: 1359px) {
-            .quick-nav {
-                position: static; width: min(900px, calc(100% - 40px));
-                max-height: none; margin: 0 auto 24px; padding: 10px 12px;
-                transform: none;
-            }
-            .quick-nav-title { padding: 0 4px 6px; }
-            .quick-nav-list {
-                display: flex; gap: 6px; overflow-x: auto;
-                scrollbar-width: none;
-            }
-            .quick-nav-list::-webkit-scrollbar { display: none; }
-            .quick-nav a { white-space: nowrap; }
-        }
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
             .quick-nav a { transition: none; }
