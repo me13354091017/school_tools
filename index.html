@@ -6,6 +6,8 @@
     <title>教学辅助工具索引</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scrollbar-width: none; }
+        html::-webkit-scrollbar { display: none; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
             background-color: #faf7f2;
@@ -62,7 +64,9 @@
         .announcements-dialog[open] { display: flex; flex-direction: column; }
         .announcements-dialog #all-announcements {
             flex: 1 1 auto; min-height: 0; overflow-y: auto;
+            scrollbar-width: none;
         }
+        .announcements-dialog #all-announcements::-webkit-scrollbar { display: none; }
         .announcements-dialog form {
             flex: 0 0 auto; padding-top: 12px; background: #fff;
         }
