@@ -51,14 +51,22 @@
             color: #fff;
             background:
                 linear-gradient(160deg, rgba(24, 35, 42, 0.42), rgba(24, 35, 42, 0.82)),
-                url("https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1200&q=85") center / cover;
+                url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=85") center / cover;
         }
         #welcome-dialog .welcome-intro { color: rgba(255,255,255,0.82); }
         #welcome-dialog .welcome-update { background: rgba(255,255,255,0.92); }
         .announcements-dialog {
             width: min(620px, calc(100% - 32px));
-            max-height: min(80vh, 720px); overflow-y: auto;
+            max-height: min(80vh, 720px);
         }
+        .announcements-dialog[open] { display: flex; flex-direction: column; }
+        .announcements-dialog #all-announcements {
+            flex: 1 1 auto; min-height: 0; overflow-y: auto;
+        }
+        .announcements-dialog form {
+            flex: 0 0 auto; padding-top: 12px; background: #fff;
+        }
+        .announcements-dialog .welcome-close { margin-top: 0; }
         .welcome-dialog::backdrop { background: rgba(35, 31, 25, 0.48); }
         .welcome-dialog h2 { margin-bottom: 6px; font-size: 22px; font-weight: 600; }
         .welcome-intro { margin-bottom: 20px; color: #888; font-size: 14px; }
@@ -120,6 +128,10 @@
         公告栏（点击打开全部日志） <span class="announcement-label">更新日志</span>
     </h2>
     <ul class="announcement-list">
+        <li class="announcement-item">
+            <time datetime="2026-11-09">2026-11-09</time>
+            <p class="announcement-content">调整公告弹窗布局，日志可滚动查看，关闭按钮固定在底部。</p>
+        </li>
         <li class="announcement-item">
             <time datetime="2026-11-09">2026-11-09</time>
             <p class="announcement-content">新增公告弹窗，点击公告栏可查看全部公告和更新日志。</p>
@@ -1384,6 +1396,22 @@
     const allAnnouncements = document.getElementById("all-announcements");
     const latestAnnouncement = document.querySelector(".announcement-item");
     const welcomeDialog = document.getElementById("welcome-dialog");
+
+    if (welcomeDialog) {
+        const scenicPhotos = [
+            "photo-1500530855697-b586d89ba3ee",
+            "photo-1470770841072-f978cf4d019e",
+            "photo-1501785888041-af3ef285b470",
+            "photo-1464822759023-fed622ff2c3b",
+            "photo-1506905925346-21bda4d32df4",
+            "photo-1470252649378-9c29740c9fa8",
+            "photo-1519681393784-d120267933ba"
+        ];
+        const dayNumber = Math.floor(Date.now() / 86400000);
+        const photo = scenicPhotos[dayNumber % scenicPhotos.length];
+        welcomeDialog.style.backgroundImage =
+            `linear-gradient(160deg, rgba(24, 35, 42, 0.42), rgba(24, 35, 42, 0.82)), url("https://images.unsplash.com/${photo}?auto=format&fit=crop&w=1200&q=85")`;
+    }
 
     if (announcementBoard && announcementsDialog && allAnnouncements) {
         announcementBoard.querySelectorAll(".announcement-item").forEach((announcement) => {
