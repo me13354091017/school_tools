@@ -144,7 +144,11 @@
     <ul class="announcement-list">
         <li class="announcement-item">
             <time datetime="2026-11-09">2026-11-09</time>
-            <p class="announcement-content">为部分应用添加项目专属图标；暂无图标或加载失败时显示分类图标。</p>
+            <p class="announcement-content">将应用专属图标改为本地加载，修复图标加载失败问题。</p>
+        </li>
+        <li class="announcement-item">
+            <time datetime="2026-11-09">2026-11-09</time>
+            <p class="announcement-content">为部分应用添加本地项目专属图标；暂无专属图标时显示分类图标。</p>
         </li>
         <li class="announcement-item">
             <time datetime="2026-11-09">2026-11-09</time>
@@ -1465,34 +1469,33 @@
     };
 
     const repositoryIcons = {
-        "classisland/classisland": "https://raw.githubusercontent.com/ClassIsland/ClassIsland/HEAD/ClassIsland/Assets/AppLogo_AppLogo.svg",
-        "sectl/secrandom": "https://raw.githubusercontent.com/SECTL/SecRandom/HEAD/resources/secrandom-icon-paper.png",
-        "1siancl/classislandcontrolhub": "https://raw.githubusercontent.com/1sIancl/ClassislandControlHub/HEAD/docs/images/logo.png",
-        "xwzkj/cheeseschedule": "https://raw.githubusercontent.com/xwzkj/CheeseSchedule/HEAD/src-tauri/icons/64x64.png",
-        "class-widgets/class-widgets": "https://raw.githubusercontent.com/Class-Widgets/Class-Widgets/HEAD/img/Logo.png",
-        "yu322142/class-widgets-1_plus": "https://raw.githubusercontent.com/YU322142/Class-Widgets-1_plus/HEAD/img/Logo.png",
-        "enigfrank/electronclassschedulex": "https://raw.githubusercontent.com/Enigfrank/ElectronClassScheduleX/HEAD/src/image/icon.png",
-        "gpuawa/iclass": "https://raw.githubusercontent.com/gpuawa/iClass/HEAD/resources/images/icon.png",
-        "jursin/schedule-vela": "https://raw.githubusercontent.com/Jursin/Schedule-Vela/HEAD/src/common/logo.png",
-        "rinlit-233-shiroko/class-widgets-2": "https://raw.githubusercontent.com/RinLit-233-shiroko/Class-Widgets-2/HEAD/assets/images/logo.png",
-        "hellogaoo/seevvodownloader": "https://raw.githubusercontent.com/HelloGaoo/SeevvoDownloader/HEAD/icon/003.ico",
-        "sectl/luminalium-2": "https://raw.githubusercontent.com/SECTL/Luminalium-2/HEAD/docs/logo.svg",
-        "enigfrank/steady-ink": "https://raw.githubusercontent.com/Enigfrank/Steady-Ink/HEAD/assets/steady-ink-icon.svg",
-        "sectl/viewpdf": "https://github.com/SECTL/ViewPDF/blob/main/src-tauri/icons/Square1024x1024Logo.png?raw=true",
-        "alan-crl/inkeys": "https://raw.githubusercontent.com/Alan-CRL/Inkeys/HEAD/GithubRes/logo.png",
-        "qqhkx/immersive-clock-monitor": "https://raw.githubusercontent.com/QQHKX/Immersive-clock-monitor/HEAD/public/favicon.svg",
-        "xuanxuan1231/smartedu-helper": "https://raw.githubusercontent.com/xuanxuan1231/smartedu-helper/HEAD/assets/icon.png",
-        "namepickerorg/namepicker": "https://raw.githubusercontent.com/NamePickerOrg/NamePicker/HEAD/assets/NamePicker.png",
-        "winfunan/verirandom": "https://raw.githubusercontent.com/WinFunan/VeriRandom/HEAD/resources/secrandom-icon-paper.png",
-        "jin-ct/easytouch": "https://raw.githubusercontent.com/jin-ct/easytouch/HEAD/icon/icon.ico",
-        "rinlit-233-shiroko/powerpoint-touch-assist": "https://raw.githubusercontent.com/RinLit-233-shiroko/PowerPoint-Touch-Assist/HEAD/img/logo.png",
-        "wrmyx/rimenotice": "https://raw.githubusercontent.com/WRMYX/RimeNotice/HEAD/RimeNotice/Assets/RimeNotice-Logo.svg",
-        "pyteachconnect/teachconnect": "https://raw.githubusercontent.com/pyTeachConnect/TeachConnect/HEAD/TC-img/favicon.png",
-        "qziky/immersive-clock": "https://raw.githubusercontent.com/Qziky/Immersive-clock/HEAD/public/favicon.svg",
-        "sectl/corkboard": "https://raw.githubusercontent.com/SECTL/Corkboard/HEAD/resources/corkboard-icon.png",
-        "bearwhite-z/daily-commission-panel": "https://raw.githubusercontent.com/BearWhite-Z/Daily-Commission-Panel/HEAD/Assets/DCP%20%E5%9B%BE%E6%A0%87.svg",
-        "creeperisaspy/fullscreennotice": "https://raw.githubusercontent.com/CreeperIsASpy/FullScreenNotice/HEAD/storage/data/favicon.png",
-        "zongzitek/zongzitek-blackboard-sticker": "https://github.com/STBBRD/ZongziTEK-Blackboard-Sticker/blob/master/ZongziTEK_Blackboard_Sticker/%E9%BB%91%E6%9D%BF%E8%B4%B4.png?raw=true"
+        "classisland/classisland": "assets/icons/classisland__classisland.svg",
+        "sectl/secrandom": "assets/icons/sectl__secrandom.png",
+        "1siancl/classislandcontrolhub": "assets/icons/1siancl__classislandcontrolhub.png",
+        "xwzkj/cheeseschedule": "assets/icons/xwzkj__cheeseschedule.png",
+        "class-widgets/class-widgets": "assets/icons/class-widgets__class-widgets.png",
+        "yu322142/class-widgets-1_plus": "assets/icons/yu322142__class-widgets-1_plus.png",
+        "enigfrank/electronclassschedulex": "assets/icons/enigfrank__electronclassschedulex.png",
+        "gpuawa/iclass": "assets/icons/gpuawa__iclass.png",
+        "jursin/schedule-vela": "assets/icons/jursin__schedule-vela.png",
+        "rinlit-233-shiroko/class-widgets-2": "assets/icons/rinlit-233-shiroko__class-widgets-2.png",
+        "hellogaoo/seevvodownloader": "assets/icons/hellogaoo__seevvodownloader.ico",
+        "sectl/luminalium-2": "assets/icons/sectl__luminalium-2.svg",
+        "enigfrank/steady-ink": "assets/icons/enigfrank__steady-ink.svg",
+        "sectl/viewpdf": "assets/icons/sectl__viewpdf.png",
+        "alan-crl/inkeys": "assets/icons/alan-crl__inkeys.png",
+        "qqhkx/immersive-clock-monitor": "assets/icons/qqhkx__immersive-clock-monitor.svg",
+        "xuanxuan1231/smartedu-helper": "assets/icons/xuanxuan1231__smartedu-helper.png",
+        "namepickerorg/namepicker": "assets/icons/namepickerorg__namepicker.png",
+        "winfunan/verirandom": "assets/icons/winfunan__verirandom.png",
+        "jin-ct/easytouch": "assets/icons/jin-ct__easytouch.ico",
+        "rinlit-233-shiroko/powerpoint-touch-assist": "assets/icons/rinlit-233-shiroko__powerpoint-touch-assist.png",
+        "wrmyx/rimenotice": "assets/icons/wrmyx__rimenotice.svg",
+        "pyteachconnect/teachconnect": "assets/icons/pyteachconnect__teachconnect.png",
+        "qziky/immersive-clock": "assets/icons/qziky__immersive-clock.svg",
+        "sectl/corkboard": "assets/icons/sectl__corkboard.png",
+        "creeperisaspy/fullscreennotice": "assets/icons/creeperisaspy__fullscreennotice.png",
+        "zongzitek/zongzitek-blackboard-sticker": "assets/icons/zongzitek__zongzitek-blackboard-sticker.png"
     };
 
     document.querySelectorAll(".category").forEach((category) => {
@@ -1510,11 +1513,11 @@
             const iconUrl = repository && repositoryIcons[repository];
             if (iconUrl) {
                 const image = document.createElement("img");
-                image.src = iconUrl;
                 image.alt = "";
                 image.loading = "lazy";
                 image.decoding = "async";
                 image.onerror = () => image.remove();
+                image.src = iconUrl;
                 toolIcon.append(image);
             }
 
