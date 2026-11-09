@@ -131,7 +131,7 @@
 <div class="page-header">
     <h1>教学辅助工具索引</h1>
     <p>专门向大连教育学院附属中学提供经过测试以及个人推荐的教学辅助应用程序，也欢迎外校前来查看，感谢智教联盟提供大量相关软件。<br>
-    本人是一名高一学生（七班），网站于2026年11月8日正式开放<br>
+    本人是一名高一学生（高一七班），网站于2026年11月8日正式开放<br>
     欢迎各位大佬指出问题与建议，谢谢！整理自智教联盟开源工具 · 点击项目地址直达 GitHub 仓库（可能有部分软件存在问题，可以向我或作者反馈）。</p>
 </div>
 
@@ -142,6 +142,14 @@
         公告栏 <span class="announcement-label">更新日志</span>
     </h2>
     <ul class="announcement-list">
+        <li class="announcement-item">
+            <time datetime="2026-11-09">2026-11-09</time>
+            <p class="announcement-content">更新 ClassIsland 插件简介，展示每个插件的具体功能。</p>
+        </li>
+        <li class="announcement-item">
+            <time datetime="2026-11-09">2026-11-09</time>
+            <p class="announcement-content">为所有 ClassIsland 插件添加本地图标。</p>
+        </li>
         <li class="announcement-item">
             <time datetime="2026-11-09">2026-11-09</time>
             <p class="announcement-content">新增“ClassIsland 插件”栏目，收录官方插件索引中标注支持 v2 API 的 68 个插件。</p>
@@ -1460,80 +1468,152 @@
 
 <script>
     const classIslandV2Plugins = [
-        ["AdvancedTimeIsland", "https://github.com/inf2147483647/AdvancedTimeIsland"],
-        ["MediaIsland", "https://github.com/bywhite0/MediaIsland"],
-        ["CIImage", "https://github.com/lrsgzs/CIImage"],
-        ["ClassGuard 离班助手", "https://github.com/sky-shunfengjun/ClassGuard"],
-        ["AIIsland", "https://github.com/qbw101/AIIsland"],
-        ["考试提醒", "https://github.com/PikaNova/ClassIsland.ExamReminder"],
-        ["MiniMax Speech TTS", "https://github.com/yijinyao0202/ClassIsland-MiniMaxTts"],
-        ["以管理员身份自启动", "https://github.com/ClassIsland/StartUpAsAdmin"],
-        ["TCP/UDP 课表发送器", "https://github.com/ChenTianyu-CTY/ClassIsland.TcpUdpSender"],
-        ["大屏时钟", "https://github.com/Human-air/BigScreenClock-For-ClassIsLand2.0"],
-        ["便捷文本插件", "https://github.com/Tiny-Nick/ConvenientText"],
-        ["Decibel_Monitor", "https://github.com/Yeson38/Decibel_Monitor"],
-        ["地震预警", "https://github.com/denglihong2007/EarthquakeWarningForClassIsLand"],
-        ["ClassIslandHide", "https://github.com/HelloWRC/ClassIslandHide"],
-        ["值日生名单", "https://github.com/Jimmyxiao2009/DutyList"],
-        ["EntertainingIsland", "https://github.com/BSOD-MEMZ/EntertainingIsland"],
-        ["FancyAnima", "https://github.com/Tiny-Nick/FancyAnima"],
-        ["FancyAnima For Linux", "https://github.com/Tiny-Nick/FancyAnimaForLinux"],
-        ["高考古诗文", "https://github.com/xiaoxinxin-Zn/GaokaoPoetryPlugin"],
-        ["课后自动复原", "https://github.com/Gordonynh/ClassReset"],
-        ["值日提醒", "https://github.com/Gordonynh/DutyRoster"],
-        ["随机抽选", "https://github.com/Gordonynh/RandomPicker"],
-        ["像素流动", "https://github.com/Gordonynh/PixelFlow"],
-        ["UIAccess 提权", "https://github.com/HelloWRC/GrantUiAccess"],
-        ["GSVIsland", "https://github.com/Gamma13-Software/GSVIsland"],
-        ["OmniTTS", "https://github.com/HickoryTrail/OmniTTS"],
-        ["节假日倒计时", "https://github.com/fengjian868/HolidayCountdown"],
-        ["移动热点守护助手", "https://github.com/Alan-CRL/HotspotService"],
-        ["HTTP 设置服务器", "https://github.com/xiaoxixi222/http_setting_server"],
-        ["iCal 日程", "https://github.com/wjj-8283/iCalClassIsland"],
-        ["ExtraIsland", "https://github.com/LiPolymer/ExtraIsland"],
-        ["GlycoLinker.Island", "https://github.com/LiPolymer/GlycoLinker.Island"],
-        ["LycheeLib", "https://github.com/LiPolymer/LycheeLib"],
-        ["PythonEntanglement", "https://gitlab.com/LiPolymer/PyEm/"],
-        ["TeTile.Island", "https://gitlab.com/LiPolymer/TeTile"],
-        ["询问窗", "https://github.com/ywydog/InquiryWindow"],
-        ["IslandCaller", "https://github.com/HickoryTrail/IslandCaller"],
-        ["IslandMQ", "https://github.com/doudou0720/IslandMQ"],
-        ["VoiceHub广播站排期", "https://github.com/laoshuikaixue/VoiceHubComponent"],
-        ["ClassLink", "https://github.com/laoshuikaixue/ClassLink-ClassIsland"],
-        ["CameraActivityMonitor", "https://github.com/LiuYan-xwx/CameraActivityMonitor"],
-        ["CIAdvanced", "https://github.com/LiuYan-xwx/CIAdvanced"],
-        ["MonitorIsland", "https://github.com/LiuYan-xwx/MonitorIsland"],
-        ["DutyIsland", "https://github.com/lrsgzs/DutyIsland"],
-        ["LibPinyin", "https://github.com/lrsgzs/LibPinyin4CI"],
-        ["SuperAutoIsland", "https://github.com/lrsgzs/SuperAutoIsland"],
-        ["MiMoTTS", "https://github.com/lladlam/ClassIsland-MiMoTTS"],
-        ["UIAccessX", "https://github.com/segf4ultk1nger/dubiisland"],
-        ["生日显示插件", "https://github.com/jinzhiyuan0327/BirthdayIsland"],
-        ["PutIsland", "https://github.com/PizeroLOL/PutIsland"],
-        ["QQListener", "https://github.com/alright-qwq/QQListener"],
-        ["RemoteCI", "https://github.com/MEMZ-Edge01/RemoteCI"],
-        ["RandPicker", "https://github.com/xuanxuan1231/RandPicker_CI"],
-        ["远程关机/截屏控制", "https://github.com/Jimmyxiao2009/RemoteShutdownClassisland"],
-        ["SecRandom CI", "https://github.com/SECTL/SecRandom-CI"],
-        ["忽略窗口", "https://github.com/S-LIGHTNING/Ignore-Window-ClassIsland-Plugin"],
-        ["SuperAutoBackup", "https://github.com/Programmer-MrWang/SuperAutoBackup"],
-        ["SwitchWallpaperSettings", "https://github.com/inf2147483647/SwitchWallpaperSettings"],
-        ["ClassBar", "https://github.com/syspowerabc/ClassBar"],
-        ["TrayMenuAnywhere", "https://github.com/syspowerabc/TrayMenuAnywhere"],
-        ["SystemTools", "https://github.com/Programmer-MrWang/SystemTools"],
-        ["TranTMenu", "https://github.com/Tiny-Nick/TranTMenu"],
-        ["UACHope", "https://github.com/ywydog/UACHope"],
-        ["VoiceAction", "https://github.com/Programmer-MrWang/VoiceAction"],
-        ["ClassIsQuoteZ", "https://github.com/xingbiao996/ClassIsQuoteZ"],
-        ["LyricsNotify", "https://github.com/Programmer-MrWang/LyricsNotify"],
-        ["MicWatch", "https://github.com/yty16/MicWatch"],
-        ["ZongziTEK 黑板贴连接器", "https://github.com/ZongziTEK/ZongziTEK-Blackboard-Sticker-Connector-for-ClassIsland"]
+        ["AdvancedTimeIsland", "https://github.com/inf2147483647/AdvancedTimeIsland", "assets/icons/classisland-plugins/plugin-AdvancedTimeIsland.png"],
+        ["MediaIsland", "https://github.com/bywhite0/MediaIsland", "assets/icons/classisland-plugins/plugin-bywhite.mediaisland.png"],
+        ["CIImage", "https://github.com/lrsgzs/CIImage", "assets/icons/classisland-plugins/plugin-CIImage.png"],
+        ["ClassGuard 离班助手", "https://github.com/sky-shunfengjun/ClassGuard", "assets/icons/classisland-plugins/plugin-ClassGuard.png"],
+        ["AIIsland", "https://github.com/qbw101/AIIsland", "assets/icons/classisland-plugins/plugin-ClassIsland.AISmartClass.png"],
+        ["考试提醒", "https://github.com/PikaNova/ClassIsland.ExamReminder", "assets/icons/classisland-plugins/authors/pikanova.jpg"],
+        ["MiniMax Speech TTS", "https://github.com/yijinyao0202/ClassIsland-MiniMaxTts", "assets/icons/classisland-plugins/plugin-ClassIsland.MiniMaxTts.png"],
+        ["以管理员身份自启动", "https://github.com/ClassIsland/StartUpAsAdmin", "assets/icons/classisland-plugins/plugin-classisland.startUpAsAdmin.ico"],
+        ["TCP/UDP 课表发送器", "https://github.com/ChenTianyu-CTY/ClassIsland.TcpUdpSender", "assets/icons/classisland-plugins/authors/chentianyu-cty.png"],
+        ["大屏时钟", "https://github.com/Human-air/BigScreenClock-For-ClassIsLand2.0", "assets/icons/classisland-plugins/authors/human-air.png"],
+        ["便捷文本插件", "https://github.com/Tiny-Nick/ConvenientText", "assets/icons/classisland-plugins/authors/tiny-nick.jpg"],
+        ["Decibel_Monitor", "https://github.com/Yeson38/Decibel_Monitor", "assets/icons/classisland-plugins/authors/yeson38.png"],
+        ["地震预警", "https://github.com/denglihong2007/EarthquakeWarningForClassIsLand", "assets/icons/classisland-plugins/authors/denglihong2007.jpg"],
+        ["ClassIslandHide", "https://github.com/HelloWRC/ClassIslandHide", "assets/icons/classisland-plugins/authors/hellowrc.png"],
+        ["值日生名单", "https://github.com/Jimmyxiao2009/DutyList", "assets/icons/classisland-plugins/plugin-dutylist.jimmyxiao.png"],
+        ["EntertainingIsland", "https://github.com/BSOD-MEMZ/EntertainingIsland", "assets/icons/classisland-plugins/authors/bsod-memz.jpg"],
+        ["FancyAnima", "https://github.com/Tiny-Nick/FancyAnima", "assets/icons/classisland-plugins/authors/tiny-nick.jpg"],
+        ["FancyAnima For Linux", "https://github.com/Tiny-Nick/FancyAnimaForLinux", "assets/icons/classisland-plugins/authors/tiny-nick.jpg"],
+        ["高考古诗文", "https://github.com/xiaoxinxin-Zn/GaokaoPoetryPlugin", "assets/icons/classisland-plugins/plugin-gaokao-poetry.png"],
+        ["课后自动复原", "https://github.com/Gordonynh/ClassReset", "assets/icons/classisland-plugins/authors/gordonynh.png"],
+        ["值日提醒", "https://github.com/Gordonynh/DutyRoster", "assets/icons/classisland-plugins/authors/gordonynh.png"],
+        ["随机抽选", "https://github.com/Gordonynh/RandomPicker", "assets/icons/classisland-plugins/authors/gordonynh.png"],
+        ["像素流动", "https://github.com/Gordonynh/PixelFlow", "assets/icons/classisland-plugins/authors/gordonynh.png"],
+        ["UIAccess 提权", "https://github.com/HelloWRC/GrantUiAccess", "assets/icons/classisland-plugins/authors/hellowrc.png"],
+        ["GSVIsland", "https://github.com/Gamma13-Software/GSVIsland", "assets/icons/classisland-plugins/authors/gamma13-software.jpg"],
+        ["OmniTTS", "https://github.com/HickoryTrail/OmniTTS", "assets/icons/classisland-plugins/plugin-HickoryTrail.OmniTTS.png"],
+        ["节假日倒计时", "https://github.com/fengjian868/HolidayCountdown", "assets/icons/classisland-plugins/authors/fengjian868.jpg"],
+        ["移动热点守护助手", "https://github.com/Alan-CRL/HotspotService", "assets/icons/classisland-plugins/authors/alan-crl.png"],
+        ["HTTP 设置服务器", "https://github.com/xiaoxixi222/http_setting_server", "assets/icons/classisland-plugins/authors/xiaoxixi222.png"],
+        ["iCal 日程", "https://github.com/wjj-8283/iCalClassIsland", "assets/icons/classisland-plugins/authors/wjj-8283.png"],
+        ["ExtraIsland", "https://github.com/LiPolymer/ExtraIsland", "assets/icons/classisland-plugins/authors/lipolymer.jpg"],
+        ["GlycoLinker.Island", "https://github.com/LiPolymer/GlycoLinker.Island", "assets/icons/classisland-plugins/authors/lipolymer.jpg"],
+        ["LycheeLib", "https://github.com/LiPolymer/LycheeLib", "assets/icons/classisland-plugins/authors/lipolymer.jpg"],
+        ["PythonEntanglement", "https://gitlab.com/LiPolymer/PyEm/", "assets/icons/classisland-plugins/authors/lipolymer.jpg"],
+        ["TeTile.Island", "https://gitlab.com/LiPolymer/TeTile", "assets/icons/classisland-plugins/authors/lipolymer.jpg"],
+        ["询问窗", "https://github.com/ywydog/InquiryWindow", "assets/icons/classisland-plugins/plugin-InquiryWindow.png"],
+        ["IslandCaller", "https://github.com/HickoryTrail/IslandCaller", "assets/icons/classisland-plugins/plugin-IslandCaller.Plugin2.png"],
+        ["IslandMQ", "https://github.com/doudou0720/IslandMQ", "assets/icons/classisland-plugins/authors/doudou0720.png"],
+        ["VoiceHub广播站排期", "https://github.com/laoshuikaixue/VoiceHubComponent", "assets/icons/classisland-plugins/authors/laoshuikaixue.png"],
+        ["ClassLink", "https://github.com/laoshuikaixue/ClassLink-ClassIsland", "assets/icons/classisland-plugins/authors/laoshuikaixue.png"],
+        ["CameraActivityMonitor", "https://github.com/LiuYan-xwx/CameraActivityMonitor", "assets/icons/classisland-plugins/authors/liuyan-xwx.jpg"],
+        ["CIAdvanced", "https://github.com/LiuYan-xwx/CIAdvanced", "assets/icons/classisland-plugins/authors/liuyan-xwx.jpg"],
+        ["MonitorIsland", "https://github.com/LiuYan-xwx/MonitorIsland", "assets/icons/classisland-plugins/authors/liuyan-xwx.jpg"],
+        ["DutyIsland", "https://github.com/lrsgzs/DutyIsland", "assets/icons/classisland-plugins/plugin-lrs2187.duty.png"],
+        ["LibPinyin", "https://github.com/lrsgzs/LibPinyin4CI", "assets/icons/classisland-plugins/plugin-lrs2187.LibPinyin.png"],
+        ["SuperAutoIsland", "https://github.com/lrsgzs/SuperAutoIsland", "assets/icons/classisland-plugins/plugin-lrs2187.sai.png"],
+        ["MiMoTTS", "https://github.com/lladlam/ClassIsland-MiMoTTS", "assets/icons/classisland-plugins/plugin-MiMoTTS.ico"],
+        ["UIAccessX", "https://github.com/segf4ultk1nger/dubiisland", "assets/icons/classisland-plugins/authors/segf4ultk1nger.jpg"],
+        ["生日显示插件", "https://github.com/jinzhiyuan0327/BirthdayIsland", "assets/icons/classisland-plugins/plugin-PikaBoo0.birthdayisland.svg"],
+        ["PutIsland", "https://github.com/PizeroLOL/PutIsland", "assets/icons/classisland-plugins/authors/pizerolol.png"],
+        ["QQListener", "https://github.com/alright-qwq/QQListener", "assets/icons/classisland-plugins/authors/alright-qwq.png"],
+        ["RemoteCI", "https://github.com/MEMZ-Edge01/RemoteCI", "assets/icons/classisland-plugins/plugin-remoteci.plugin.png"],
+        ["RandPicker", "https://github.com/xuanxuan1231/RandPicker_CI", "assets/icons/classisland-plugins/plugin-RP4CI.png"],
+        ["远程关机/截屏控制", "https://github.com/Jimmyxiao2009/RemoteShutdownClassisland", "assets/icons/classisland-plugins/authors/jimmyxiao2009.jpg"],
+        ["SecRandom CI", "https://github.com/SECTL/SecRandom-CI", "assets/icons/classisland-plugins/authors/sectl.jpg"],
+        ["忽略窗口", "https://github.com/S-LIGHTNING/Ignore-Window-ClassIsland-Plugin", "assets/icons/classisland-plugins/authors/s-lightning.png"],
+        ["SuperAutoBackup", "https://github.com/Programmer-MrWang/SuperAutoBackup", "assets/icons/classisland-plugins/authors/programmer-mrwang.jpg"],
+        ["SwitchWallpaperSettings", "https://github.com/inf2147483647/SwitchWallpaperSettings", "assets/icons/classisland-plugins/authors/inf2147483647.jpg"],
+        ["ClassBar", "https://github.com/syspowerabc/ClassBar", "assets/icons/classisland-plugins/authors/syspowerabc.png"],
+        ["TrayMenuAnywhere", "https://github.com/syspowerabc/TrayMenuAnywhere", "assets/icons/classisland-plugins/authors/syspowerabc.png"],
+        ["SystemTools", "https://github.com/Programmer-MrWang/SystemTools", "assets/icons/classisland-plugins/plugin-SystemTools.png"],
+        ["TranTMenu", "https://github.com/Tiny-Nick/TranTMenu", "assets/icons/classisland-plugins/authors/tiny-nick.jpg"],
+        ["UACHope", "https://github.com/ywydog/UACHope", "assets/icons/classisland-plugins/authors/ywydog.png"],
+        ["VoiceAction", "https://github.com/Programmer-MrWang/VoiceAction", "assets/icons/classisland-plugins/plugin-voiceaction.for.core2.png"],
+        ["ClassIsQuoteZ", "https://github.com/xingbiao996/ClassIsQuoteZ", "assets/icons/classisland-plugins/authors/xingbiao996.jpg"],
+        ["LyricsNotify", "https://github.com/Programmer-MrWang/LyricsNotify", "assets/icons/classisland-plugins/authors/programmer-mrwang.jpg"],
+        ["MicWatch", "https://github.com/yty16/MicWatch", "assets/icons/classisland-plugins/authors/yty16.jpg"],
+        ["ZongziTEK 黑板贴连接器", "https://github.com/ZongziTEK/ZongziTEK-Blackboard-Sticker-Connector-for-ClassIsland", "assets/icons/classisland-plugins/authors/zongzitek.png"]
     ];
 
+    const classIslandV2PluginDescriptions = {
+        "AdvancedTimeIsland": "时光岛高级模块",
+        "MediaIsland": "在主界面显示 Windows SMTC 媒体信息。",
+        "CIImage": "显示图片。",
+        "ClassGuard 离班助手": "下课后检查 USB 设备是否已弹出，以及指定软件是否仍在运行，避免离开教室前遗漏。",
+        "AIIsland": "为 ClassIsland 添加 AI 驱动的智能课表提醒和学习仪表盘。",
+        "考试提醒": "从学校考试看板同步班级考试，并在开考前提醒和提前打开考试大屏。",
+        "MiniMax Speech TTS": "将 MiniMax Speech 接入 ClassIsland，支持自定义模型、音色和持久化短语缓存。",
+        "以管理员身份自启动": "通过计划任务，让 ClassIsland 在开机时以管理员身份自启动。",
+        "TCP/UDP 课表发送器": "通过 TCP/UDP 实时发送课表，支持 JSON 和纯文本格式，可自定义发送间隔和地址。",
+        "大屏时钟": "全屏显示当前时间、教室分贝值和课程信息；支持连堂显示及按课程统计吵闹次数。",
+        "便捷文本插件": "使用桌面悬浮窗快速修改文本，支持调整颜色和字号。",
+        "Decibel_Monitor": "监测环境声音大小。",
+        "地震预警": "提供地震预警信息。",
+        "ClassIslandHide": "通过伪装尝试规避部分弹窗拦截工具对 ClassIsland 的拦截。",
+        "值日生名单": "显示可配置的值日生名单，支持按星期、时段设置多组人员及自定义颜色。",
+        "EntertainingIsland": "提供防巡堂警报、小说阅读器、口头禅计数、RSS 新闻、头像课程表、点名器、体育赛事和下课倒计时等功能。",
+        "FancyAnima": "基于 CPU 渲染的高性能提醒特效，让低端设备运行更流畅。",
+        "FancyAnima For Linux": "Linux 版 CPU 渲染提醒特效，让低端设备运行更流畅。",
+        "高考古诗文": "随机展示高考必背古诗文名句，支持按教材册别筛选。",
+        "课后自动复原": "下课后自动关闭学生打开的程序、弹出 U 盘并清理桌面；支持倒计时取消、按科目定制和定时关机。",
+        "值日提醒": "到点弹出值日安排；支持日常时间点卡片和大扫除全屏提醒。",
+        "随机抽选": "通过悬浮窗随机抽取名单成员；支持从合影中检测人脸并抽选。",
+        "像素流动": "使用像素流动动画替换提醒背景，配色跟随主题色，倒计时以彩带长度表示。",
+        "UIAccess 提权": "提升 ClassIsland 的 UIAccess 令牌，使其可置顶到全屏 UWP 应用和系统界面上。",
+        "GSVIsland": "使 ClassIsland 语音服务适配 GPT-SoVITS 推理特化包（GSVI）的 API。",
+        "OmniTTS": "聚合多个服务商的 TTS API。",
+        "节假日倒计时": "多功能倒计时套件，包含节气、农历、天气、寒暑假、自定义节日、课程表联动和学习时长统计。",
+        "移动热点守护助手": "提供 Windows 移动热点守护、守护目标同步及自动化和规则集接入能力。",
+        "HTTP 设置服务器": "通过 HTTP API 远程修改 ClassIsland 组件设置。",
+        "iCal 日程": "从 iCal 文件加载当天日程并显示，支持实时进度、多文件合并、时间冲突检测和日历视图。",
+        "ExtraIsland": "为 ClassIsland 提供多种扩展功能。",
+        "GlycoLinker.Island": "提供 Glycoprotein 协议支持。",
+        "LycheeLib": "为 ClassIsland 插件提供统一的歌词接口。",
+        "PythonEntanglement": "在 ClassIsland 中使用 Python 进行自动化（项目标注为有已知问题）。",
+        "TeTile.Island": "适用于 ClassIsland 的大学课表解析器。",
+        "询问窗": "触发后弹出询问窗口，点击按钮触发相关行动。",
+        "IslandCaller": "基于 ClassIsland 2.0 插件的轻量级点名器。",
+        "IslandMQ": "适用于 ClassIsland 2.x 的远程 API 调用插件。",
+        "VoiceHub广播站排期": "按播放顺序展示广播站当日排期歌曲信息。",
+        "ClassLink": "在 ClassIsland 显示受支持播放器的高级歌词、封面和播放状态。",
+        "CameraActivityMonitor": "监控摄像头是否正在被使用。",
+        "CIAdvanced": "跳过引导教学、移除提示并打开调试菜单等高级功能。",
+        "MonitorIsland": "在主界面实时监控系统硬件资源使用状态。",
+        "DutyIsland": "为 ClassIsland 添加值日表。",
+        "LibPinyin": "提供拼音支持。",
+        "SuperAutoIsland": "超级汽车岛插件。",
+        "MiMoTTS": "使 ClassIsland 语音服务适配 Xiaomi MiMo V2 TTS API。",
+        "UIAccessX": "为 ClassIsland 2 提供增强置顶能力。",
+        "生日显示插件": "在 ClassIsland 主界面显示今日生日人数，支持从 Excel 导入姓名和生日数据。",
+        "PutIsland": "添加文本组件，允许外部软件通过本地 HTTP POST 接口更新内容。",
+        "QQListener": "监听 Windows 通知中心中的 QQ 消息，并转发为 ClassIsland 提醒。",
+        "RemoteCI": "接入 RemoteCI 服务端，支持通过 WearOS 手表执行换课、通知、主界面显示控制、音量和电源等操作。",
+        "RandPicker": "为 RandPicker 提供 ClassIsland 集成服务。",
+        "远程关机/截屏控制": "通过局域网网页远程截屏、关机或重启被控 Windows 电脑。",
+        "SecRandom CI": "实现 SecRandom 2 与 ClassIsland 2 联动。",
+        "忽略窗口": "让 ClassIsland 规则集判断前台窗口时跳过被忽略的窗口，并选择第一个未被忽略的窗口。",
+        "SuperAutoBackup": "为 ClassIsland 提供高级自动备份功能。",
+        "SwitchWallpaperSettings": "基于 C# 异步实现、支持切换契合度的系统壁纸切换器。",
+        "ClassBar": "为 ClassIsland 划分并显示一块屏幕区域。",
+        "TrayMenuAnywhere": "通过行动打开 ClassIsland 托盘菜单。",
+        "SystemTools": "提供更多行动、触发器和实用工具。",
+        "TranTMenu": "将应用文本框的默认英文右键菜单汉化为剪切、复制、粘贴和全选。",
+        "UACHope": "启动 ClassIsland 时自动以管理员身份运行。",
+        "VoiceAction": "添加调整电脑音量的功能（Windows）。",
+        "ClassIsQuoteZ": "将课表和更多内容带到 Quote/0。",
+        "LyricsNotify": "以提醒方式显示歌词。",
+        "MicWatch": "监控麦克风是否正在被使用。",
+        "ZongziTEK 黑板贴连接器": "连接并交互 ZongziTEK 黑板贴与 ClassIsland。"
+    };
+
     const classIslandV2PluginGrid = document.getElementById("classisland-v2-plugin-grid");
-    classIslandV2Plugins.forEach(([name, url]) => {
+    classIslandV2Plugins.forEach(([name, url, iconUrl]) => {
         const card = document.createElement("div");
         card.className = "tool-card";
+        card.dataset.iconUrl = iconUrl;
 
         const info = document.createElement("div");
         info.className = "tool-info";
@@ -1544,7 +1624,7 @@
 
         const description = document.createElement("div");
         description.className = "tool-desc";
-        description.textContent = "支持 ClassIsland v2";
+        description.textContent = classIslandV2PluginDescriptions[name];
         info.append(toolName, description);
 
         const projectLink = document.createElement("a");
@@ -1620,7 +1700,7 @@
 
             const projectLink = card.querySelector(".project-btn");
             const repository = projectLink?.href.match(/github\.com\/([^/]+\/[^/?#]+)/i)?.[1].toLowerCase();
-            const iconUrl = repository && repositoryIcons[repository];
+            const iconUrl = card.dataset.iconUrl || (repository && repositoryIcons[repository]);
             if (iconUrl) {
                 const image = document.createElement("img");
                 image.alt = "";
