@@ -1775,39 +1775,36 @@
         return `data:image/svg+xml,${encodeURIComponent(svg)}`;
     };
 
-    document.querySelectorAll(".category").forEach((category) => {
-        const title = category.querySelector(".category-title")?.textContent.trim();
-        const icon = categoryIcons[title] || "💻";
+    document.querySelectorAll(".tool-card").forEach((card) => {
+        const categoryTitle = card.closest(".category")?.querySelector(".category-title")?.textContent.trim();
+        const icon = categoryIcons[categoryTitle] || "💻";
+        const toolIcon = document.createElement("span");
+        toolIcon.className = "tool-icon";
+        toolIcon.setAttribute("aria-hidden", "true");
+        toolIcon.textContent = icon;
 
-        category.querySelectorAll(".tool-card").forEach((card) => {
-            const toolIcon = document.createElement("span");
-            toolIcon.className = "tool-icon";
-            toolIcon.setAttribute("aria-hidden", "true");
-            toolIcon.textContent = icon;
+        const projectLink = card.querySelector(".project-btn");
+        const repository = projectLink?.href.match(/github\.com\/([^/]+\/[^/?#]+)/i)?.[1].toLowerCase();
+        const iconUrl = card.dataset.iconUrl || (repository && repositoryIcons[repository]);
+        const appName = card.querySelector(".tool-name")?.textContent.trim() || "APP";
+        const fallbackIconUrl = makeAppIconUrl(appName);
+        const image = document.createElement("img");
+        image.alt = "";
+        image.loading = "lazy";
+        image.decoding = "async";
+        let usingFallback = !iconUrl;
+        image.onerror = () => {
+            if (usingFallback) {
+                image.remove();
+                return;
+            }
+            usingFallback = true;
+            image.src = fallbackIconUrl;
+        };
+        image.src = iconUrl || fallbackIconUrl;
+        toolIcon.append(image);
 
-            const projectLink = card.querySelector(".project-btn");
-            const repository = projectLink?.href.match(/github\.com\/([^/]+\/[^/?#]+)/i)?.[1].toLowerCase();
-            const iconUrl = card.dataset.iconUrl || (repository && repositoryIcons[repository]);
-            const appName = card.querySelector(".tool-name")?.textContent.trim() || "APP";
-            const fallbackIconUrl = makeAppIconUrl(appName);
-            const image = document.createElement("img");
-            image.alt = "";
-            image.loading = "lazy";
-            image.decoding = "async";
-            let usingFallback = !iconUrl;
-            image.onerror = () => {
-                if (usingFallback) {
-                    image.remove();
-                    return;
-                }
-                usingFallback = true;
-                image.src = fallbackIconUrl;
-            };
-            image.src = iconUrl || fallbackIconUrl;
-            toolIcon.append(image);
-
-            card.prepend(toolIcon);
-        });
+        card.prepend(toolIcon);
     });
 
     const announcementBoard = document.querySelector(".announcement-board");
