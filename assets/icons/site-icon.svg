@@ -24,5 +24,5 @@
   <rect x="44" y="78" width="360" height="292" rx="46" fill="url(#glass)" stroke="#fff" stroke-width="9"/>
   <path d="M56 263h336v61a46 46 0 0 1-46 46H102a46 46 0 0 1-46-46z" fill="url(#warm)" opacity=".96"/>
   <path d="M62 105a42 42 0 0 1 36-20h244" fill="none" stroke="#fff" stroke-opacity=".72" stroke-width="8" stroke-linecap="round"/>
-  <text x="224" y="224" text-anchor="middle" dominant-baseline="middle" fill="#17191a" font-family="Arial, Helvetica, sans-serif" font-size="154" font-weight="900" letter-spacing="-13">st</text>
+  <text x="224" y="224" text-anchor="middle" dominant-baseline="middle" fill="#17191a" font-family="Arial, Helvetica, sans-serif" font-size="154" font-weight="900" letter-spacing="-13">ST</text>
 </svg>
