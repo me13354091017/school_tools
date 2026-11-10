@@ -1758,6 +1758,23 @@
         "zongzitek/zongzitek-blackboard-sticker": "assets/icons/zongzitek__zongzitek-blackboard-sticker.png"
     };
 
+    const makeAppIconUrl = (name) => {
+        const words = name.replace(/([a-z0-9])([A-Z])/g, "$1 $2").match(/[\p{L}\p{N}]+/gu) || [];
+        const initials = (words.length > 1
+            ? words.slice(0, 2).map((word) => [...word][0]).join("")
+            : [...(words[0] || "APP")].slice(0, 2).join("")
+        ).toUpperCase();
+        let hue = 0;
+        for (const character of name) {
+            hue = (hue * 31 + character.codePointAt(0)) % 360;
+        }
+        const escapedInitials = initials.replace(/[&<>"']/g, (character) => ({
+            "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;"
+        })[character]);
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="hsl(${hue} 48% 48%)"/><text x="32" y="33" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="24" font-weight="700">${escapedInitials}</text></svg>`;
+        return `data:image/svg+xml,${encodeURIComponent(svg)}`;
+    };
+
     document.querySelectorAll(".category").forEach((category) => {
         const title = category.querySelector(".category-title")?.textContent.trim();
         const icon = categoryIcons[title] || "💻";
@@ -1771,15 +1788,23 @@
             const projectLink = card.querySelector(".project-btn");
             const repository = projectLink?.href.match(/github\.com\/([^/]+\/[^/?#]+)/i)?.[1].toLowerCase();
             const iconUrl = card.dataset.iconUrl || (repository && repositoryIcons[repository]);
-            if (iconUrl) {
-                const image = document.createElement("img");
-                image.alt = "";
-                image.loading = "lazy";
-                image.decoding = "async";
-                image.onerror = () => image.remove();
-                image.src = iconUrl;
-                toolIcon.append(image);
-            }
+            const appName = card.querySelector(".tool-name")?.textContent.trim() || "APP";
+            const fallbackIconUrl = makeAppIconUrl(appName);
+            const image = document.createElement("img");
+            image.alt = "";
+            image.loading = "lazy";
+            image.decoding = "async";
+            let usingFallback = !iconUrl;
+            image.onerror = () => {
+                if (usingFallback) {
+                    image.remove();
+                    return;
+                }
+                usingFallback = true;
+                image.src = fallbackIconUrl;
+            };
+            image.src = iconUrl || fallbackIconUrl;
+            toolIcon.append(image);
 
             card.prepend(toolIcon);
         });
