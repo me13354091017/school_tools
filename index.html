@@ -103,6 +103,7 @@
         }
         .quick-nav::-webkit-scrollbar { display: none; }
         .quick-nav-header { display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+        .quick-nav-collapsed-icon { display: none; width: 20px; height: 20px; color: #806b50; }
         .quick-nav-title {
             padding: 0 8px 8px; color: #888; font-size: 12px;
             font-weight: 600; letter-spacing: 0.04em;
@@ -119,7 +120,8 @@
         .quick-nav-toggle:focus-visible { outline: 2px solid #98764e; outline-offset: 1px; }
         .quick-nav-toggle svg { width: 16px; height: 16px; transition: transform 0.2s; }
         .quick-nav.is-collapsed { width: 48px; padding: 8px; }
-        .quick-nav.is-collapsed .quick-nav-header { justify-content: center; }
+        .quick-nav.is-collapsed .quick-nav-header { flex-direction: column; justify-content: center; gap: 6px; }
+        .quick-nav.is-collapsed .quick-nav-collapsed-icon { display: block; }
         .quick-nav.is-collapsed .quick-nav-title,
         .quick-nav.is-collapsed .quick-nav-list { display: none; }
         .quick-nav.is-collapsed .quick-nav-toggle { margin: 0; }
@@ -131,7 +133,7 @@
             color: #666; font-size: 13px; line-height: 1.4;
             text-decoration: none; transition: background 0.2s, color 0.2s;
         }
-        .quick-nav-icon { width: 16px; height: 16px; flex: 0 0 16px; }
+        .quick-nav-icon { width: 32px; height: 32px; flex: 0 0 32px; }
         .quick-nav-label { min-width: 0; }
         .quick-nav a:hover, .quick-nav a:focus-visible {
             color: #6d5940; background: #f5eee2;
@@ -310,6 +312,14 @@
 <nav class="quick-nav" aria-label="栏目快捷导航">
     <div class="quick-nav-header">
         <div class="quick-nav-title">快捷导航</div>
+        <svg class="quick-nav-collapsed-icon" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+            stroke-linejoin="round" role="img" aria-label="快捷导航">
+            <path d="M4 5h16M4 12h16M4 19h16" />
+            <circle cx="7" cy="5" r="1" fill="currentColor" stroke="none" />
+            <circle cx="7" cy="12" r="1" fill="currentColor" stroke="none" />
+            <circle cx="7" cy="19" r="1" fill="currentColor" stroke="none" />
+        </svg>
         <button class="quick-nav-toggle" id="quick-nav-toggle" type="button"
             aria-label="折叠快捷导航" aria-expanded="true" aria-controls="quick-nav-list" title="折叠快捷导航">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
