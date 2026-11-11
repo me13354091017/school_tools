@@ -16,13 +16,16 @@
             line-height: 1.6;
             padding-bottom: 60px;
         }
-        .page-header { max-width: 900px; margin: 0 auto; padding: 40px 20px 20px; }
+        .page-header { position: relative; max-width: 900px; margin: 0 auto; padding: 40px 20px 20px; }
         .page-header h1 { font-size: 28px; font-weight: 600; margin-bottom: 10px; }
         .page-header-brand {
             display: inline-flex; align-items: center; gap: 8px;
             font-size: clamp(30px, 7vw, 40px);
         }
-        .page-header-brand img { width: 1.4em; height: 1.4em; }
+        .page-header-icon {
+            position: absolute; top: 40px; right: 20px;
+            width: 3.36em; height: 3.36em; font-size: clamp(30px, 7vw, 40px);
+        }
         .page-header p { color: #777; font-size: 14px; }
         .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
         .announcement-board {
@@ -99,20 +102,44 @@
             scrollbar-width: none;
         }
         .quick-nav::-webkit-scrollbar { display: none; }
+        .quick-nav-header { display: flex; align-items: center; justify-content: space-between; gap: 4px; }
         .quick-nav-title {
             padding: 0 8px 8px; color: #888; font-size: 12px;
             font-weight: 600; letter-spacing: 0.04em;
         }
+        .quick-nav-toggle {
+            display: grid; width: 28px; height: 28px; flex: 0 0 28px;
+            place-items: center; margin: -4px 0 4px; padding: 0;
+            border: 0; border-radius: 5px; color: #777; background: transparent;
+            cursor: pointer; transition: background 0.2s, color 0.2s;
+        }
+        .quick-nav-toggle:hover, .quick-nav-toggle:focus-visible {
+            color: #6d5940; background: #f5eee2;
+        }
+        .quick-nav-toggle:focus-visible { outline: 2px solid #98764e; outline-offset: 1px; }
+        .quick-nav-toggle svg { width: 16px; height: 16px; transition: transform 0.2s; }
+        .quick-nav.is-collapsed { width: 48px; padding: 8px; }
+        .quick-nav.is-collapsed .quick-nav-header { justify-content: center; }
+        .quick-nav.is-collapsed .quick-nav-title,
+        .quick-nav.is-collapsed .quick-nav-list { display: none; }
+        .quick-nav.is-collapsed .quick-nav-toggle { margin: 0; }
+        .quick-nav.is-collapsed .quick-nav-toggle svg { transform: rotate(180deg); }
         .quick-nav-list { display: grid; gap: 2px; list-style: none; }
         .quick-nav a {
-            display: block; padding: 6px 8px; border-radius: 5px;
+            display: flex; align-items: center; gap: 8px;
+            padding: 6px 8px; border-radius: 5px;
             color: #666; font-size: 13px; line-height: 1.4;
             text-decoration: none; transition: background 0.2s, color 0.2s;
         }
+        .quick-nav-icon { width: 16px; height: 16px; flex: 0 0 16px; }
+        .quick-nav-label { min-width: 0; }
         .quick-nav a:hover, .quick-nav a:focus-visible {
             color: #6d5940; background: #f5eee2;
         }
         .quick-nav a:focus-visible { outline: 2px solid #98764e; outline-offset: 1px; }
+        @media (prefers-reduced-motion: reduce) {
+            .quick-nav-toggle, .quick-nav-toggle svg { transition: none; }
+        }
         .category { margin-bottom: 36px; scroll-margin-top: 24px; }
         .category-title {
             font-size: 18px; font-weight: 600; padding-bottom: 8px;
@@ -155,6 +182,8 @@
             .quick-nav a { transition: none; }
         }
         @media (max-width: 480px) {
+            .page-header { padding-top: 120px; }
+            .page-header-icon { top: 16px; }
             .announcement-board { margin: 0 20px 28px; padding: 16px; }
             .announcement-item { grid-template-columns: 1fr; gap: 2px; }
         }
@@ -163,7 +192,8 @@
 <body>
 
 <div class="page-header">
-    <h1><span class="page-header-brand">SCHOOL_TOOLS<img src="assets/icons/site-icon.svg" alt="" aria-hidden="true"></span><br>一个足以改变全校的教学辅助工具索引</h1>
+    <img class="page-header-icon" src="assets/icons/site-icon.svg" alt="" aria-hidden="true">
+    <h1><span class="page-header-brand">SCHOOL_TOOLS</span><br>一个足以改变全校的教学辅助工具索引</h1>
     <p>专门向大连教育学院附属中学提供经过测试以及个人推荐的教学辅助应用程序，也欢迎外校前来查看，感谢智教联盟提供大量相关软件。<br>
     本人是一名高一学生（高一七班），网站于2026年11月8日正式开放<br>
     欢迎各位大佬指出问题与建议，谢谢！整理自智教联盟开源工具 · 点击项目地址直达 GitHub 仓库（可能有部分软件存在问题，可以向我或作者反馈）。</p>
@@ -176,6 +206,10 @@
         公告栏 <span class="announcement-label">更新日志</span>
     </h2>
     <ul class="announcement-list">
+        <li class="announcement-item">
+            <time datetime="2026-11-11">2026-11-11</time>
+            <p class="announcement-content">为快捷导航添加栏目图标和折叠按钮。</p>
+        </li>
         <li class="announcement-item">
             <time datetime="2026-11-10">2026-11-10</time>
             <p class="announcement-content">为所有应用添加图标；暂无项目专属图标时自动生成应用首字母图标。</p>
@@ -274,7 +308,16 @@
 </dialog>
 
 <nav class="quick-nav" aria-label="栏目快捷导航">
-    <div class="quick-nav-title">快捷导航</div>
+    <div class="quick-nav-header">
+        <div class="quick-nav-title">快捷导航</div>
+        <button class="quick-nav-toggle" id="quick-nav-toggle" type="button"
+            aria-label="折叠快捷导航" aria-expanded="true" aria-controls="quick-nav-list" title="折叠快捷导航">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="m14 5-7 7 7 7" />
+            </svg>
+        </button>
+    </div>
     <ul class="quick-nav-list" id="quick-nav-list"></ul>
 </nav>
 
@@ -1697,6 +1740,27 @@
     });
 
     const quickNavList = document.getElementById("quick-nav-list");
+    const quickNav = document.querySelector(".quick-nav");
+    const quickNavToggle = document.getElementById("quick-nav-toggle");
+    const quickNavIcons = {
+        "最佳教室搭配": "M4 5h16v12H4z M8 21h8 M12 17v4 M8 9h8 M8 13h5",
+        "ClassIsland 集控软件": "M3 4h18v13H3z M8 21h8 M12 17v4 M8 8h8",
+        "ClassIsland 插件": "M8 3a2 2 0 1 1 4 0v2h3a2 2 0 0 1 2 2v3h2a2 2 0 1 1 0 4h-2v3a2 2 0 0 1-2 2h-3v-2a2 2 0 1 0-4 0v2H7a2 2 0 0 1-2-2v-3H3a2 2 0 1 1 0-4h2V7a2 2 0 0 1 2-2h1z",
+        "课表软件": "M4 5h16v16H4z M8 3v4 M16 3v4 M4 10h16 M8 14h2 M14 14h2 M8 17h2",
+        "希沃相关": "M3 4h18v13H3z M8 21h8 M12 17v4 M8 8h8",
+        "教学批注": "m4 20 4-.8L19 8a2 2 0 0 0-3-3L5 16z M14.5 6.5l3 3 M4 20h16",
+        "学习辅助": "M3 5.5A2.5 2.5 0 0 1 5.5 3H12v17H5.5A2.5 2.5 0 0 0 3 22z M21 5.5A2.5 2.5 0 0 0 18.5 3H12v17h6.5A2.5 2.5 0 0 1 21 22z",
+        "随机抽签与计票": "M4 4h7v7H4z M13 13h7v7h-7z M15 4h1 M19 8h1 M4 15h1 M8 19h1 M15 5h5v5h-5z M4 13h5v5H4z",
+        "班级管理": "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M22 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75",
+        "触屏辅助": "M8 11V5a2 2 0 0 1 4 0v6-2a2 2 0 0 1 4 0v2a2 2 0 0 1 4 0v5a6 6 0 0 1-6 6h-2a6 6 0 0 1-5-3l-3-5a2 2 0 0 1 3-2z",
+        "行为限制": "M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z M9 12l2 2 4-4",
+        "网络通信": "M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M5 19a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M19 19a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M10 11 7 14 M14 11l3 3 M8 17h8",
+        "大屏与考场时钟": "M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z M12 6v6l4 2 M9 2h6",
+        "倒计时与进度": "M8 2h8 M8 22h8 M7 2c0 5 5 6 5 10s-5 5-5 10 M17 2c0 5-5 6-5 10s5 5 5 10 M8 6h8 M8 18h8",
+        "公告作业值日面板": "M6 3h12v18H6z M9 7h6 M9 11h6 M9 15h3 M4 6v14h2",
+        "桌面皮肤与小部件": "M3 3h8v8H3z M13 3h8v5h-8z M13 10h8v11h-8z M3 13h8v8H3z",
+        "网页与站点项目": "M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20z M2 12h20 M12 2a15 15 0 0 1 0 20 M12 2a15 15 0 0 0 0 20"
+    };
     document.querySelectorAll(".category").forEach((category, index) => {
         const title = category.querySelector(".category-title")?.textContent.trim();
         if (!title) return;
@@ -1707,9 +1771,32 @@
         const item = document.createElement("li");
         const link = document.createElement("a");
         link.href = `#${id}`;
-        link.textContent = title;
+        link.setAttribute("aria-label", title);
+        link.title = title;
+        const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        icon.setAttribute("viewBox", "0 0 24 24");
+        icon.setAttribute("fill", "none");
+        icon.setAttribute("stroke", "currentColor");
+        icon.setAttribute("stroke-width", "1.7");
+        icon.setAttribute("stroke-linecap", "round");
+        icon.setAttribute("stroke-linejoin", "round");
+        icon.setAttribute("aria-hidden", "true");
+        icon.classList.add("quick-nav-icon");
+        const iconPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        iconPath.setAttribute("d", quickNavIcons[title] || quickNavIcons["网页与站点项目"]);
+        icon.append(iconPath);
+        const label = document.createElement("span");
+        label.className = "quick-nav-label";
+        label.textContent = title;
+        link.append(icon, label);
         item.append(link);
         quickNavList.append(item);
+    });
+    quickNavToggle.addEventListener("click", () => {
+        const isCollapsed = quickNav.classList.toggle("is-collapsed");
+        quickNavToggle.setAttribute("aria-expanded", String(!isCollapsed));
+        quickNavToggle.setAttribute("aria-label", isCollapsed ? "展开快捷导航" : "折叠快捷导航");
+        quickNavToggle.title = isCollapsed ? "展开快捷导航" : "折叠快捷导航";
     });
 
     const categoryIcons = {
