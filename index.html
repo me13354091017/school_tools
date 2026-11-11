@@ -157,10 +157,10 @@
         .tool-card:hover { border-color: #d8d2c6; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
         .tool-info { flex: 1; min-width: 0; }
         .tool-icon {
-            width: 42px; height: 42px; flex: 0 0 42px; display: grid;
+            width: 31.5px; height: 31.5px; flex: 0 0 31.5px; display: grid;
             position: relative; overflow: hidden; place-items: center;
             margin-right: 12px; border-radius: 10px;
-            background: #f5eee2; font-size: 21px;
+            background: #f5eee2; font-size: 15.75px;
         }
         .tool-icon img {
             position: absolute; inset: 0; width: 100%; height: 100%;
@@ -179,7 +179,29 @@
             text-align: center; color: #aaa; font-size: 13px;
             margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;
         }
-        @media (max-width: 720px) { .card-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 720px) {
+            body { padding-top: calc(58px + env(safe-area-inset-top)); }
+            .quick-nav {
+                top: 0; right: 0; left: 0; display: flex; align-items: center; gap: 8px;
+                width: 100%; max-height: none; padding: calc(8px + env(safe-area-inset-top)) 12px 8px;
+                transform: none; border-width: 0 0 1px; border-radius: 0;
+            }
+            .quick-nav-header { flex: 0 0 auto; }
+            .quick-nav-title { padding: 0 4px; white-space: nowrap; }
+            .quick-nav-list {
+                display: flex; flex: 1 1 auto; min-width: 0; gap: 2px;
+                overflow-x: auto; scrollbar-width: none;
+            }
+            .quick-nav-list::-webkit-scrollbar { display: none; }
+            .quick-nav a { flex: 0 0 auto; white-space: nowrap; }
+            .quick-nav.is-collapsed { width: 100%; padding: calc(8px + env(safe-area-inset-top)) 12px 8px; }
+            .quick-nav.is-collapsed .quick-nav-header {
+                flex-direction: row; justify-content: space-between; gap: 4px;
+            }
+            .card-grid { grid-template-columns: 1fr; }
+            .tool-card { padding: 12px; }
+            .project-btn { min-height: 44px; display: inline-flex; align-items: center; }
+        }
         @media (prefers-reduced-motion: reduce) {
             html { scroll-behavior: auto; }
             .quick-nav a { transition: none; }
@@ -209,6 +231,10 @@
         公告栏 <span class="announcement-label">更新日志</span>
     </h2>
     <ul class="announcement-list">
+        <li class="announcement-item">
+            <time datetime="2026-11-11">2026-11-11</time>
+            <p class="announcement-content">网站支持移动端了。</p>
+        </li>
         <li class="announcement-item">
             <time datetime="2026-11-11">2026-11-11</time>
             <p class="announcement-content">为快捷导航添加栏目图标和折叠按钮。</p>
