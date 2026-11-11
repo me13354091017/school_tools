@@ -182,7 +182,8 @@
         @media (max-width: 720px) {
             body { padding-top: calc(58px + env(safe-area-inset-top)); }
             .quick-nav {
-                top: 0; right: 0; left: 0; display: flex; align-items: center; gap: 8px;
+                position: fixed; top: 0; right: 0; left: 0;
+                display: flex; align-items: center; gap: 8px;
                 width: 100%; max-height: none; padding: calc(8px + env(safe-area-inset-top)) 12px 8px;
                 transform: none; border-width: 0 0 1px; border-radius: 0;
             }
@@ -1829,6 +1830,16 @@
         item.append(link);
         quickNavList.append(item);
     });
+    const mobileQuickNav = window.matchMedia("(max-width: 720px)");
+    const syncQuickNavCollapsedState = () => {
+        const isMobile = mobileQuickNav.matches;
+        quickNav.classList.toggle("is-collapsed", isMobile);
+        quickNavToggle.setAttribute("aria-expanded", String(!isMobile));
+        quickNavToggle.setAttribute("aria-label", isMobile ? "展开快捷导航" : "折叠快捷导航");
+        quickNavToggle.title = isMobile ? "展开快捷导航" : "折叠快捷导航";
+    };
+    syncQuickNavCollapsedState();
+    mobileQuickNav.addEventListener("change", syncQuickNavCollapsedState);
     quickNavToggle.addEventListener("click", () => {
         const isCollapsed = quickNav.classList.toggle("is-collapsed");
         quickNavToggle.setAttribute("aria-expanded", String(!isCollapsed));
