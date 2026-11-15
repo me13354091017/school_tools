@@ -1,0 +1,59 @@
+name: Changelog Entry
+
+on:
+  push:
+    paths:
+      - '.github/workflows/changelog.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  add:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Insert top changelog entry
+        run: |
+          python3 - << 'PY'
+          from pathlib import Path
+
+          p = Path('index.html')
+          html = p.read_text(encoding='utf-8')
+          guard = 'SchoolToolsBoard（STB）课堂白板发布 v1.1.2'
+          if guard in html:
+              print('SKIP: entry already present')
+              raise SystemExit(0)
+
+          marker = '<ul class="announcement-list">'
+          if html.count(marker) != 1:
+              raise SystemExit('marker count unexpected: %d' % html.count(marker))
+
+          entry = (
+              '        <li class="announcement-item">\n'
+              '            <time datetime="2026-11-15">2026-11-15</time>\n'
+              '            <p class="announcement-content">'
+              + guard
+              + '：桌面版（以 ICC-CE 开源项目为底座）正式扶正为主应用，自研 WPF 版下线；支持 PPT 放映逐页批注、多页白板 + 时间机器、笔压手势。</p>\n'
+              '        </li>\n'
+          )
+
+          html = html.replace(marker, marker + '\n' + entry, 1)
+          p.write_text(html, encoding='utf-8')
+          print('OK: entry inserted')
+          PY
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "no change to commit"
+            exit 0
+          fi
+          git commit -m "docs: 公告栏置顶新增 SchoolToolsBoard v1.1.2 更新记录"
+          git push
