@@ -1,0 +1,50 @@
+name: Add PointManager
+on:
+  push:
+    paths:
+      - '.github/workflows/add-pointmanager.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  add:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Insert PointManager card
+        run: |
+          python3 - << 'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          html = p.read_text(encoding='utf-8')
+          if 'PointManager' in html:
+              print('SKIP: already present')
+              raise SystemExit(0)
+          anchor = '                <a class="project-btn" href="https://github.com/SECTL/SecScore" target="_blank">项目地址</a>\n            </div>'
+          card = anchor + (
+              '\n            <div class="tool-card">\n'
+              '                <div class="tool-info">\n'
+              '                    <div class="tool-name">PointManager</div>\n'
+              '                    <div class="tool-desc">学生积分管理</div>\n'
+              '                </div>\n'
+              '                <a class="project-btn" href="https://github.com/XPSoftware/PointManager" target="_blank">项目地址</a>\n'
+              '            </div>'
+          )
+          if html.count(anchor) != 1:
+              raise SystemExit('anchor count unexpected: %d' % html.count(anchor))
+          html = html.replace(anchor, card, 1)
+          p.write_text(html, encoding='utf-8')
+          print('OK: PointManager card inserted')
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "no change to commit"
+            exit 0
+          fi
+          git commit -m "docs: 班级管理栏目新增 PointManager（学生积分管理）"
+          git push
