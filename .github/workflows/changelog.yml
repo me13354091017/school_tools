@@ -1,52 +1,43 @@
 name: Changelog Entry
-
 on:
   push:
     paths:
       - '.github/workflows/changelog.yml'
   workflow_dispatch:
-
 permissions:
   contents: write
-
 jobs:
   add:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Insert top changelog entry
         run: |
           python3 - << 'PY'
           from pathlib import Path
-
           p = Path('index.html')
           html = p.read_text(encoding='utf-8')
-          guard = 'SchoolToolsBoard（STB）课堂白板发布 v1.1.4'
+          guard = 'SchoolToolsBoard（STB）课堂白板发布 v1.1.5'
           if guard in html:
               print('SKIP: entry already present')
               raise SystemExit(0)
-
           marker = '<ul class="announcement-list">'
           if html.count(marker) != 1:
               raise SystemExit('marker count unexpected: %d' % html.count(marker))
-
           entry = (
               '        <li class="announcement-item">\n'
               '            <time datetime="2026-11-16">2026-11-16</time>\n'
               '            <p class="announcement-content">'
               + guard
-              + '：新增与希沃同形态的板中板（白底黑笔、居中于主白板、可拖可拉伸、多页+撤销，关闭即把板书按原位置贴回主白板且可 Ctrl+Z 撤销）；同时把笔迹平滑、工具栏动效、窗口背景、PPT 预览加载动画的默认值调到更省资源的平衡档。'
+              + '：全面重构界面视觉与黑板界面——新增象牙白（浅色）/石墨黑板（深色）双主题，重画浮动工具栏、更多功能弹窗、设置页、历史回滚、快抽窗口，黑板底色改 #101A16、白板底色改 #F7F8F6，工具栏、图标与水印配色统一；板中板与性能档位保持上版行为。下载：https://github.com/me13354091017/SCHOOL_TOOLS_BOARD/releases/tag/v1.1.5'
               '            </p>\n'
               '        </li>\n'
           )
-
           html = html.replace(marker, marker + '\n' + entry, 1)
           p.write_text(html, encoding='utf-8')
           print('OK: entry inserted')
           PY
-
       - name: Commit and push
         run: |
           git config user.name "github-actions[bot]"
@@ -56,5 +47,5 @@ jobs:
             echo "no change to commit"
             exit 0
           fi
-          git commit -m "docs: 公告栏置顶新增 SchoolToolsBoard v1.1.4（板中板 + 性能默认值）记录"
+          git commit -m "docs: 公告栏置顶新增 SchoolToolsBoard v1.1.5（UI 与黑板界面重构）记录"
           git push
