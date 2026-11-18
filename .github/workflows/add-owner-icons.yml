@@ -1,0 +1,70 @@
+name: Add Owner App Icons
+on:
+  push:
+    paths:
+      - '.github/workflows/add-owner-icons.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  icons:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Fetch and install owner app icons
+        run: |
+          pip install --quiet pillow
+          python3 - << 'PY'
+          import io, urllib.request
+          from pathlib import Path
+          from PIL import Image
+
+          out = Path('assets/icons')
+          out.mkdir(parents=True, exist_ok=True)
+
+          def fetch(url):
+              req = urllib.request.Request(url, headers={'User-Agent': 'icon-bot'})
+              return urllib.request.urlopen(req, timeout=30).read()
+
+          stb_svg = fetch('https://raw.githubusercontent.com/me13354091017/SCHOOL_TOOLS_BOARD/main/icons/icon.svg')
+          (out / 'me13354091017__school_tools_board.svg').write_bytes(stb_svg)
+          print('board svg bytes', len(stb_svg))
+
+          pdf_ico = fetch('https://raw.githubusercontent.com/me13354091017/SCHOOL_TOOLS_PDF/main/SCHOOL_PDF/Resources/app.ico')
+          im = Image.open(io.BytesIO(pdf_ico)).convert('RGBA')
+          im = im.resize((256, 256), Image.LANCZOS)
+          im.save(out / 'me13354091017__school_tools_pdf.png', 'PNG')
+          print('pdf png saved', im.size)
+          PY
+      - name: Patch index.html icon mapping
+        run: |
+          python3 - << 'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          html = p.read_text(encoding='utf-8')
+          if 'me13354091017/school_tools_board' in html:
+              print('SKIP: mapping already present')
+              raise SystemExit(0)
+          anchor = '    const repositoryIcons = {\n'
+          add = (
+              '        "me13354091017/school_tools_pdf": "assets/icons/me13354091017__school_tools_pdf.png",\n'
+              '        "me13354091017/school_tools_board": "assets/icons/me13354091017__school_tools_board.svg",\n'
+          )
+          if html.count(anchor) != 1:
+              raise SystemExit('anchor count unexpected: %d' % html.count(anchor))
+          html = html.replace(anchor, anchor + add, 1)
+          p.write_text(html, encoding='utf-8')
+          print('OK: mapping inserted')
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html assets/icons/me13354091017__school_tools_pdf.png assets/icons/me13354091017__school_tools_board.svg
+          if git diff --cached --quiet; then
+            echo "no change to commit"
+            exit 0
+          fi
+          git commit -m "feat: 为 SCHOOL_TOOLS 旗下应用（PDF、SchoolToolsBoard）添加专属图标"
+          git push
