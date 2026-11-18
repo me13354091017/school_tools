@@ -1,0 +1,40 @@
+name: Remove First Announcement Link
+on:
+  push:
+    paths:
+      - '.github/workflows/remove-first-announce-link.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  edit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Strip link from first announcement
+        run: |
+          python3 - << 'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          html = p.read_text(encoding='utf-8')
+          old = '即可使用。下载：https://github.com/XPSoftware/PointManager/releases/tag/1.0.0.0'
+          new = '即可使用。'
+          if old not in html:
+              print('SKIP: link already removed or anchor not found')
+              raise SystemExit(0)
+          html = html.replace(old, new, 1)
+          p.write_text(html, encoding='utf-8')
+          print('OK: first announcement link removed')
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "no change to commit"
+            exit 0
+          fi
+          git commit -m "docs: 移除首条公告中的下载链接"
+          git push
