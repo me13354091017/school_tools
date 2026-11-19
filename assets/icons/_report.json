@@ -1,0 +1,27 @@
+{
+  "processed": 131,
+  "repo_icon": 61,
+  "avatar": 67,
+  "fail": 5,
+  "errors": [
+    "TEG6129BEV15/ElectronClassScheduleWithEditor: HTTPError HTTP Error 404: Not Found",
+    "LiuYan-xwx/icc-0610fix: InvalidURL URL can't contain control characters. '/LiuYan-xwx/icc-0610fix/master/Ink Canvas/Resources/Icons/DrawShapeIcon.svg' (found at",
+    "InkCanvasForClass/community-net462: InvalidURL URL can't contain control characters. '/InkCanvasForClass/community-net462/17194-ep/Ink Canvas/Resources/Icons-pn",
+    "BaiYang2238/Ink-Canvas-Better: InvalidURL URL can't contain control characters. '/BaiYang2238/Ink-Canvas-Better/master/Ink Canvas/Resources/Icons/DrawShapeIcon.",
+    "wwcrdrvf6u/ShowWrite: UnicodeEncodeError 'ascii' codec can't encode characters in position 28-30: ordinal not in range(128)",
+    "HelloZWH-0620/Reciting-us: InvalidURL URL can't contain control characters. '/HelloZWH-0620/Reciting-us/main/Memorization UI/resource/icons/icon-72.png' (found ",
+    "liuyuchen012/check-in: HTTPError HTTP Error 404: Not Found",
+    "MootBlueSereneSnow avatar: HTTPError HTTP Error 404: Not Found",
+    "hxh230802/NamePickerPlus: HTTPError HTTP Error 404: Not Found",
+    "hxh230802 avatar: HTTPError HTTP Error 404: Not Found",
+    "Zhao-Yidan1982 avatar: HTTPError HTTP Error 404: Not Found",
+    "shdh377/RandomPick: HTTPError HTTP Error 404: Not Found",
+    "DryIce-cc/ImNotJiahao: HTTPError HTTP Error 404: Not Found",
+    "WuguMowaInc/ClassSun: HTTPError HTTP Error 404: Not Found",
+    "WuguMowaInc avatar: HTTPError HTTP Error 404: Not Found",
+    "jiugulixiaoniu/ClassScreenLock: UnicodeEncodeError 'ascii' codec can't encode character '\\u7eaf' in position 65: ordinal not in range(128)",
+    "ShihaoShen2025/WinTimeBoard: HTTPError HTTP Error 404: Not Found",
+    "ShihaoShen2025 avatar: HTTPError HTTP Error 404: Not Found"
+  ],
+  "mapped": 126
+}
