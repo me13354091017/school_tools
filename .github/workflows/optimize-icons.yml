@@ -13,135 +13,45 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Retry repo icons with quoted paths
-        id: retry
-        continue-on-error: true
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          python3 - << 'PY'
-          import json, os, re, subprocess, time, traceback, urllib.parse, urllib.request, pathlib
-
-          TOKEN = os.environ.get('GH_TOKEN', '')
-          API = 'https://api.github.com'
-          ICONS = pathlib.Path('assets/icons')
-          log = []
-
-          def get(url, raw=False):
-              h = {'User-Agent': 'icon-bot', 'Accept': 'application/vnd.github+json'}
-              if TOKEN:
-                  h['Authorization'] = 'Bearer ' + TOKEN
-              req = urllib.request.Request(url, headers=h)
-              with urllib.request.urlopen(req, timeout=30) as resp:
-                  data = resp.read()
-              return data if raw else json.loads(data)
-
-          def safe(s):
-              return re.sub(r'[^a-z0-9_.-]', '-', s.lower())
-
-          ICON = re.compile(r'([^/]*(?:icon|logo|favicon|avatar|brand|app)[^/]*)\.(png|svg|ico|webp|jpg|jpeg|gif)$', re.I)
-          BAD = re.compile(r'(node_modules|/tests?/|sample|screenshot|preview|banner|cover|background|readme|license|\.github/)', re.I)
-          STEM = {'icon': 0, 'favicon': 1, 'logo': 2, 'app': 3, 'avatar': 4, 'brand': 5}
-          EXT = {'png': 0, 'svg': 1, 'webp': 2, 'ico': 3, 'jpg': 5, 'jpeg': 6, 'gif': 9}
-
-          def pick(paths):
-              best = None
-              for p in paths:
-                  if not ICON.search(p) or BAD.search(p):
-                      continue
-                  stem = re.sub(r'[^a-z]', '', pathlib.Path(p).stem.lower())
-                  ext = pathlib.Path(p).suffix.lower().lstrip('.')
-                  score = (STEM.get(stem, 9), EXT.get(ext, 9), p.count('/'), len(p))
-                  if best is None or score < best[0]:
-                      best = (score, p)
-              return best[1] if best else None
-
-          def to_webp(src, dst):
-              subprocess.run(['convert', str(src), '-resize', '128x128', '-background', 'none',
-                              '-gravity', 'center', '-extent', '128x128', '-strip',
-                              '-quality', '88', str(dst)], check=True, capture_output=True, timeout=60)
-
-          html_path = pathlib.Path('index.html')
-          html = html_path.read_text(encoding='utf-8')
-          entries = re.findall(r'"([a-z0-9_.-]+/[a-z0-9_.-]+)": "assets/icons/([^"]+)"', html)
-          retried = 0
-          for key, fname in entries:
-              if not fname.startswith('owner__'):
-                  continue
-              owner, repo = key.split('/', 1)
-              retried += 1
-              try:
-                  meta = get(f'{API}/repos/{owner}/{repo}')
-                  full = meta['full_name']
-                  branch = meta.get('default_branch') or 'main'
-                  tree = get(f"{API}/repos/{owner}/{repo}/git/trees/{branch}?recursive=1")
-                  paths = [t['path'] for t in tree.get('tree', []) if t.get('type') == 'blob']
-                  path = pick(paths)
-                  if not path:
-                      continue
-                  quoted = urllib.parse.quote(path, safe='/~')
-                  raw = get('https://raw.githubusercontent.com/' + full + '/' + urllib.parse.quote(branch)
-                            + '/' + quoted, raw=True)
-                  if not (800 < len(raw) < 800000):
-                      continue
-                  tmp = pathlib.Path('/tmp/icon.src')
-                  tmp.write_bytes(raw)
-                  fn = safe(full.replace('/', '__')) + '.webp'
-                  try:
-                      to_webp(tmp, ICONS / fn)
-                  except Exception:
-                      ext = pathlib.Path(path).suffix.lower().lstrip('.')
-                      fn = safe(full.replace('/', '__')) + '.' + ext
-                      (ICONS / fn).write_bytes(raw)
-                  html = html.replace('assets/icons/' + fname, 'assets/icons/' + fn)
-                  log.append(f'fixed {key} -> {fn}')
-              except Exception as e:
-                  log.append(f'{key}: {type(e).__name__}')
-              time.sleep(0.05)
-
-          html_path.write_text(html, encoding='utf-8')
-          pathlib.Path('assets/icons/_retry.log').write_text('\n'.join(log), encoding='utf-8')
-          print('retried', retried, 'fixed', sum(1 for x in log if x.startswith('fixed')))
-          PY
+      - name: Install ImageMagick
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq imagemagick > /dev/null
 
       - name: Compress oversized icons to 128px webp
-        if: always()
         run: |
           python3 - << 'PY'
-          import os, re, subprocess, pathlib
+          import re, subprocess, pathlib
 
           ICONS = pathlib.Path('assets/icons')
           html_path = pathlib.Path('index.html')
           html = html_path.read_text(encoding='utf-8')
-          refs = sorted(set(re.findall(r'assets/icons/([^"\'\)]+)', html)))
-          converted = 0
-          failed = []
-          for name in refs:
-              src = ICONS / name
-              if not src.exists() or src.suffix.lower() == '.svg':
+          converted, skipped, failed = 0, 0, []
+
+          for src in sorted(ICONS.iterdir()):
+              if not src.is_file() or src.name.startswith('_'):
                   continue
-              if src.stat().st_size <= 30000:
+              if src.suffix.lower() == '.svg' or src.stat().st_size <= 30000:
+                  skipped += 1
                   continue
               dst = src.with_suffix('.webp')
               try:
                   subprocess.run(['convert', str(src), '-resize', '128x128', '-background', 'none',
                                   '-gravity', 'center', '-extent', '128x128', '-strip',
                                   '-quality', '88', str(dst)], check=True, capture_output=True, timeout=90)
-                  if dst.stat().st_size < src.stat().st_size:
-                      html = html.replace('assets/icons/' + name, 'assets/icons/' + dst.name)
+                  if dst.exists() and dst.stat().st_size < src.stat().st_size:
+                      html = html.replace('assets/icons/' + src.name, 'assets/icons/' + dst.name)
                       converted += 1
-                  else:
+                  elif dst.exists():
                       dst.unlink()
               except Exception as e:
-                  failed.append(f'{name}: {type(e).__name__}')
+                  failed.append(f'{src.name}: {type(e).__name__} {e}'[:150])
+
           html_path.write_text(html, encoding='utf-8')
           pathlib.Path('assets/icons/_compress.log').write_text(
-              f'converted {converted}\nfailed {len(failed)}\n' + '\n'.join(failed), encoding='utf-8')
-          print('converted', converted, 'failed', len(failed))
+              f'converted {converted}, skipped {skipped}, failed {len(failed)}\n' + '\n'.join(failed), encoding='utf-8')
+          print('converted', converted, 'skipped', skipped, 'failed', len(failed))
           PY
 
       - name: Prune unreferenced icons
-        if: always()
         run: |
           python3 - << 'PY'
           import re, pathlib
@@ -150,7 +60,7 @@ jobs:
           ICONS = pathlib.Path('assets/icons')
           removed = 0
           for f in ICONS.iterdir():
-              if f.name.startswith('_'):
+              if not f.is_file() or f.name.startswith('_'):
                   continue
               if f.name not in refs:
                   f.unlink()
@@ -159,7 +69,6 @@ jobs:
           PY
 
       - name: Commit and push
-        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -168,5 +77,5 @@ jobs:
             echo "no change"
             exit 0
           fi
-          git commit -m "perf: 图标转为 128px webp 并修正带空格路径的仓库图标"
+          git commit -m "perf: 大图标转为 128px webp"
           git push
