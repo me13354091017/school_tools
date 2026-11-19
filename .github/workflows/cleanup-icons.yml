@@ -1,0 +1,31 @@
+name: Cleanup Icon Tooling
+on:
+  push:
+    paths:
+      - '.github/workflows/cleanup-icons.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Remove one-off files
+        run: |
+          git rm -f --ignore-unmatch \
+            .github/workflows/add-all-icons.yml \
+            .github/workflows/optimize-icons.yml \
+            assets/icons/_report.json \
+            assets/icons/_retry.log \
+            assets/icons/_compress.log
+          git rm -f --ignore-unmatch .github/workflows/cleanup-icons.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --cached --quiet; then
+            echo "nothing to remove"
+            exit 0
+          fi
+          git commit -m "chore: 清理一次性图标工作流与诊断文件"
+          git push
