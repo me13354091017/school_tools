@@ -233,6 +233,10 @@
     </h2>
     <ul class="announcement-list">
         <li class="announcement-item">
+            <time datetime="2026-11-21">2026-11-21</time>
+            <p class="announcement-content">SchoolToolsBoard（STB）更新 1.0.1.36：PPT 放映判定回到 1.0.1.29，并补上异常重置——放映识别只认 PowerPoint 的 COM 放映窗（SlideShowWindows），不再用窗口类名（screenclass / showwnd / wppshow）和「无标题栏 + 全屏 + 置顶」去猜，编辑窗最大化、全屏网页、全屏视频都不会再被误判成放映；同时新增异常重置：PowerPoint 被任务管理器强制结束、崩溃、或先关文稿再退出时，COM 不会发「放映结束」事件，常驻检查一旦发现 PowerPoint 进程全没了，就把批注界面收回去（工具栏复位、结束按钮收起、窗口取消置顶）并清掉 COM 连接，下次打开 PowerPoint 重新连接、重新识别；放映结束但事件丢了的情况，连续 3 拍（约 2.4 秒）确认没有放映窗后也会自动收回批注；结束放映按钮仍是 5 秒静默期 + 无 COM 时用 Esc 结束。安装目录（启动器 + app-1.0.1.36-0 + data）、按天日志 data\Logs、矢量缩放按钮、翻页 COM 守卫等全部延续。</p>
+        </li>
+        <li class="announcement-item">
             <time datetime="2026-11-20">2026-11-20</time>
             <p class="announcement-content">SchoolToolsBoard（STB）更新 1.0.1.35：安装目录按通用软件重排（ClassIsland 式），日志改成一天一个文件，并修掉「结束放映点不动」——安装版现在是 安装目录\SchoolToolsBoard.exe（启动器）+ app-1.0.1.35-0\（程序与全部 dll）+ data\（设置、日志、存档，升级不丢），换版本只替换 app 目录，免安装 zip 版仍保持平铺结构；日志写到 data\Logs\2026-11-20.log 这种按日期命名的文件，一天一个，设置 → 高级 → 日志 →「打开日志文件夹」可一键跳到日志目录；结束放映以前点完会被常驻探测瞬间拉回批注层，看起来像没反应，现在点结束放映先进入 5 秒静默期、期间不再自动切批注，没有 COM 的放映（WPS、轻量批注）用 Esc 真正结束放映，结束后回到普通白板、放映条消失，不会再卡在「PPT 放映 · 批注模式」；矢量缩放按钮、翻页 COM 守卫、放映识别两拍确认、点击定位输入、键盘浮层夹紧、希沃式二维输入框等全部延续。</p>
         </li>
