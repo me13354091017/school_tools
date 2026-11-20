@@ -234,6 +234,10 @@
     <ul class="announcement-list">
         <li class="announcement-item">
             <time datetime="2026-11-21">2026-11-21</time>
+            <p class="announcement-content">SchoolToolsBoard（STB）更新 1.0.1.37：PPT 放映识别换成 GitHub 上验证过的实现——采用 QTimer 的 is_ppt_slideshow_active 三重判据（窗口类名是放映专用类：screenClass / kslideshow / wps_slideshow / wpp_slideshow_class；或属于放映进程且标题带「幻灯片放映 / Slide Show」；或铺满显示器 ±6 像素的真全屏，且排除最大化窗口），并吸收 RimePPT 的放映窗观察思路；常驻检查从 0.8 秒一拍提速到 0.5 秒一拍，按 F5 基本一秒内进批注；编辑窗最大化、全屏网页、全屏视频不再被误判成放映，WPS 放映也能自动进批注；异常复位沿用上版——进程被任务管理器结束、崩溃、先关文稿再退出时收回批注并重建 COM 连接，点「结束放映」保留 5 秒静默期。下载：安装包 / 免安装桌面版。</p>
+        </li>
+        <li class="announcement-item">
+            <time datetime="2026-11-21">2026-11-21</time>
             <p class="announcement-content">SchoolToolsBoard（STB）更新 1.0.1.36：PPT 放映判定回到 1.0.1.29，并补上异常重置——放映识别只认 PowerPoint 的 COM 放映窗（SlideShowWindows），不再用窗口类名（screenclass / showwnd / wppshow）和「无标题栏 + 全屏 + 置顶」去猜，编辑窗最大化、全屏网页、全屏视频都不会再被误判成放映；同时新增异常重置：PowerPoint 被任务管理器强制结束、崩溃、或先关文稿再退出时，COM 不会发「放映结束」事件，常驻检查一旦发现 PowerPoint 进程全没了，就把批注界面收回去（工具栏复位、结束按钮收起、窗口取消置顶）并清掉 COM 连接，下次打开 PowerPoint 重新连接、重新识别；放映结束但事件丢了的情况，连续 3 拍（约 2.4 秒）确认没有放映窗后也会自动收回批注；结束放映按钮仍是 5 秒静默期 + 无 COM 时用 Esc 结束。安装目录（启动器 + app-1.0.1.36-0 + data）、按天日志 data\Logs、矢量缩放按钮、翻页 COM 守卫等全部延续。</p>
         </li>
         <li class="announcement-item">
