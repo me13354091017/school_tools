@@ -27,7 +27,7 @@ jobs:
           block = '''<li class="announcement-item">
             <time datetime="2026-11-22">2026-11-22</time>
             <p class="announcement-content">SchoolToolsBoard（STB）更新 1.0.1.49：修好 WPS 轻量批注「结束放映」——真机定位出 Qt 放映窗会丢弃纯 Esc；本版先向放映窗投递一次鼠标点击消息再发 Esc，实测连续 4 次都能立即关窗回到白板；并实测白板书写、板中板开关、插入函数（y=x 出图并可插入）、设置 7 个页签、清屏、计时器、抽奖均正常。下载：安装包 / 免安装桌面版（GitHub Release v1.0.1.49）。</p>
-        </li>'''
+            </li>'''
           new = anchor + '\n        ' + block
           if anchor not in s:
               raise SystemExit('anchor not found')
