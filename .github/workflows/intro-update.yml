@@ -1,0 +1,46 @@
+name: Update Intro
+on:
+  push:
+    paths:
+      - '.github/workflows/intro-update.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  intro:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Rewrite homepage intro
+        run: |
+          python3 - << 'PY'
+          import re, pathlib
+
+          new_block = '''<p>专门向大连教育学院附属中学提供经过测试、以及我个人推荐的教学辅助应用程序，也欢迎外校的老师同学前来查看取用。<br>
+          收录内容以「智教联盟」开源生态为主，按用途分成最佳教室搭配、课表软件、ClassIsland 集控与插件、希沃相关、教学批注、学习辅助、随机抽签与计票、班级管理、触屏与行为限制、网络通信、大屏与考场时钟、桌面皮肤与小部件等栏目，左侧导航可一键直达。<br>
+          除整理第三方工具外，本站也维护两款自家应用：SCHOOL_TOOLS_PDF（PDF 阅读与教学批注）和 SchoolToolsBoard（课堂白板与教学批注，基于 Ink Canvas Plus），可在页首「SCHOOL_TOOLS 旗下应用」中查看。<br>
+          本人是一名高一学生（高一七班），网站于 2026 年 11 月 8 日正式开放。每个条目点击「项目地址」即可直达 GitHub 仓库，方便查看源码与更新；软件均为第三方开源作品，使用中遇到问题，欢迎向我或原作者反馈。<br>
+          欢迎各位大佬指出问题与建议，谢谢！</p>'''
+
+          p = pathlib.Path('index.html')
+          html = p.read_text(encoding='utf-8')
+          pattern = re.compile(r'<p>专门向大连教育学院附属中学提供.*?</p>', re.S)
+          new_html, n = pattern.subn(new_block, html, count=1)
+          if n != 1:
+              raise SystemExit('intro paragraph not found')
+          p.write_text(new_html, encoding='utf-8')
+          print('intro replaced, size', len(new_html))
+          PY
+      - name: Remove this workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm -f --ignore-unmatch .github/workflows/intro-update.yml
+          git add index.html
+          if git diff --cached --quiet; then
+            echo "no change"
+            exit 0
+          fi
+          git commit -m "docs: 丰富首页介绍并补充旗下应用说明"
+          git push
