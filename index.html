@@ -233,6 +233,10 @@
     </h2>
     <ul class="announcement-list">
         <li class="announcement-item">
+            <time datetime="2026-11-23">2026-11-23</time>
+            <p class="announcement-content">SchoolToolsBoard（STB）更新 1.0.1.63：修复退出 PPT / WPS 放映后自动变成红笔批注——退出时恢复放映前的指针/画笔/橡皮、笔色、粗细、橡皮形状、画板显隐、浮动栏位置与展开状态、颜色高亮和窗口层级；WPS 轻量退出立即恢复，COM 退出由状态守卫兜底；200ms 状态守卫和 800ms 放映探针重复触发时只恢复一次，不会把笔/橡皮又压回指针。放映前正在使用全局批注的，退出后回到指针模式，不自动续批注。下载：安装包 / 免安装桌面版（GitHub Release v1.0.1.63）。</p>
+        </li>
+        <li class="announcement-item">
 <time datetime="2026-11-23">2026-11-23</time>
 <p class="announcement-content">SCHOOL_TOOLS_PDF 更新 0.1.18（性能优化）：打开 PDF 时逐页取尺寸改走 FPDF_GetPageSizeByIndexF，只读页字典、不再逐页构造页面对象，几百页的大文档打开与切页明显更快；启动后自动预热 pdfium 与 sqlite 原生库，首次打开文档少等一截；页面渲染像素缓冲复用池从 1 块扩到 2 块覆盖并发渲染，滚动缩放时不再反复分配约 20MB 大对象，减少偶发卡顿。下载：安装包 / 免安装压缩包（GitHub Release v0.1.18）。</p>
 </li>
