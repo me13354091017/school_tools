@@ -1,0 +1,43 @@
+name: PDF announce 0.1.18
+
+on:
+  push:
+    paths:
+      - 'release-notes/pdf-0.1.18.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Insert announcement on top
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          if 'SCHOOL_TOOLS_PDF 更新 0.1.18' in s:
+              print('already announced')
+              raise SystemExit(0)
+          anchor = '<ul class="announcement-list">'
+          block = '''<li class="announcement-item">
+          <time datetime="2026-11-23">2026-11-23</time>
+          <p class="announcement-content">SCHOOL_TOOLS_PDF 更新 0.1.18（性能优化）：打开 PDF 时逐页取尺寸改走 FPDF_GetPageSizeByIndexF，只读页字典、不再逐页构造页面对象，几百页的大文档打开与切页明显更快；启动后自动预热 pdfium 与 sqlite 原生库，首次打开文档少等一截；页面渲染像素缓冲复用池从 1 块扩到 2 块覆盖并发渲染，滚动缩放时不再反复分配约 20MB 大对象，减少偶发卡顿。下载：安装包 / 免安装压缩包（GitHub Release v0.1.18）。</p>
+          </li>'''
+          if anchor not in s:
+              raise SystemExit('anchor not found')
+          s = s.replace(anchor, anchor + '\n        ' + block, 1)
+          p.write_text(s, encoding='utf-8')
+          print('inserted')
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add index.html
+          git commit -m "announce: SCHOOL_TOOLS_PDF 0.1.18" || exit 0
+          git push
