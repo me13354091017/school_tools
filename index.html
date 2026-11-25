@@ -235,6 +235,10 @@
     </h2>
     <ul class="announcement-list">
         <li class="announcement-item">
+<time datetime="2026-11-26">2026-11-26</time>
+<p class="announcement-content">SchoolToolsBoard（STB）更新 1.0.2.6「浮窗拖动收尾」：修复点开浮窗（组件编辑窗 / 笑脸 Popup 菜单）后拖动浮动栏，透明拖拽遮罩可能因 MouseUp 被浮窗吃掉而留在最上层，表现为点哪里都没反应、像崩溃；拖拽遮罩增加 40ms 鼠标左键状态看门狗，物理鼠标一松就强制收尾。补全异常日志，LogHelper、AppDomain 与后台任务未处理异常都会写入日志，便于继续排查；保留 1.0.2.5 的拖动捕获、NaN 校验、3 像素阈值与笑脸菜单延迟弹出。下载：安装包 / 免安装桌面版（GitHub Release v1.0.2.6）。</p>
+</li>
+        <li class="announcement-item">
 <time datetime="2026-11-25">2026-11-25</time>
 <p class="announcement-content">SchoolToolsBoard（STB）更新 1.0.2.5「拖动崩溃修复」：拖动浮动栏时捕获鼠标，松开、切窗或丢失捕获都会强制结束拖动并收起透明遮罩，避免遮罩留在最上层造成卡死/像崩溃；拖动坐标校验 NaN/Infinity，累计位移超过 3 像素才判定为拖动；左键菜单改到鼠标事件结束后弹出，移除遗留的三连击笑脸钩子，拖动结束不再误弹菜单。保留板中板底栏三个按钮、24 色墨迹、12 套主题与颜色主题下拉框。下载：安装包 / 免安装桌面版（GitHub Release v1.0.2.5）。</p>
 </li>
