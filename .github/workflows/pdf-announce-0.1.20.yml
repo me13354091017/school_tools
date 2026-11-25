@@ -1,0 +1,43 @@
+name: PDF announce 0.1.20
+
+on:
+  push:
+    paths:
+      - 'release-notes/pdf-0.1.20.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Insert announcement on top
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          if 'SCHOOL_TOOLS_PDF 更新 0.1.20' in s:
+              print('already announced')
+              raise SystemExit(0)
+          anchor = '<ul class="announcement-list">'
+          block = '''<li class="announcement-item">
+          <time datetime="2026-11-25">2026-11-25</time>
+          <p class="announcement-content">SCHOOL_TOOLS_PDF 更新 0.1.20（隐藏滚动条）：阅读区、缩略图列表、设置页、更新日志与错误窗口里的滚动条全部隐藏，也不再占用布局空间；滚动仍可用滚轮、触摸平移与 PageUp/PageDown 翻页键。其余功能与 0.1.19 一致。下载：安装包 / 免安装压缩包（GitHub Release v0.1.20）。</p>
+          </li>'''
+          if anchor not in s:
+              raise SystemExit('anchor not found')
+          s = s.replace(anchor, anchor + '\n        ' + block, 1)
+          p.write_text(s, encoding='utf-8')
+          print('inserted')
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add index.html
+          git commit -m "announce: SCHOOL_TOOLS_PDF 0.1.20" || exit 0
+          git push
