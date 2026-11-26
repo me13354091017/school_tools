@@ -1,0 +1,44 @@
+name: STB announce 1.0.3.1
+
+on:
+  push:
+    paths:
+      - '.github/workflows/stb-announce-1.0.3.1.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Insert announcement on top
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          if '更新 1.0.3.1' in s:
+              print('already announced')
+              raise SystemExit(0)
+          anchor = '<ul class="announcement-list">'
+          block = '''<li class="announcement-item">
+            <time datetime="2026-11-27">2026-11-27</time>
+            <p class="announcement-content">SchoolToolsBoard（STB）更新 1.0.3.1「关闭、板中板与批注函数」：删除关闭时的“未保存工作”拦截提示，笑脸菜单和设置页里的退出都可以直接关闭应用；修复板中板底栏按钮被头部拖拽手势吞掉的问题，关闭、大小切换、收起按钮恢复；右下角缩放手柄加大，板中板可正常调整宽高；批注工具条新增 f(x) 按钮，批注时可直接打开函数画板；线性图标统一描边，按钮视觉粗细更一致。保留 1.0.3.0 的 Lucide 图标与书写平滑。下载：安装包（GitHub Release v1.0.3.1）。</p>
+            </li>'''
+          new = anchor + '\n        ' + block
+          if anchor not in s:
+              raise SystemExit('anchor not found')
+          s = s.replace(anchor, new, 1)
+          p.write_text(s, encoding='utf-8')
+          print('inserted')
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add index.html
+          git commit -m "announce: STB 1.0.3.1" || exit 0
+          git push
