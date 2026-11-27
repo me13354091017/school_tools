@@ -1,0 +1,38 @@
+name: PDF homepage desc 0.1.23
+
+on:
+  push:
+    paths:
+      - '.github/workflows/homepage-desc.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  edit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update project card description
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = '<div class="tool-desc">PDF阅读与教学批注工具</div>'
+          new = '<div class="tool-desc">PDF 阅读与课堂教学批注：手写、荧光笔、激光笔与图形标注，墨迹可存回 PDF，也可导出 UInk 交换</div>'
+          if old not in s:
+              print('marker not found, skip')
+              raise SystemExit(0)
+          s = s.replace(old, new, 1)
+          p.write_text(s, encoding='utf-8')
+          print('updated desc')
+          PY
+      - name: Commit
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add index.html
+          git commit -m "docs: update SCHOOL_TOOLS_PDF card description" || exit 0
+          git push
