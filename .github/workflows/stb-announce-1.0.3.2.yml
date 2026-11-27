@@ -1,0 +1,44 @@
+name: STB announce 1.0.3.2
+
+on:
+  push:
+    paths:
+      - '.github/workflows/stb-announce-1.0.3.2.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Insert announcement on top
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          if '更新 1.0.3.2' in s:
+              print('already announced')
+              raise SystemExit(0)
+          anchor = '<ul class="announcement-list">'
+          block = '''<li class="announcement-item">
+            <time datetime="2026-11-27">2026-11-27</time>
+            <p class="announcement-content">SchoolToolsBoard（STB）更新 1.0.3.2「黑板函数、漫游与命中区」：函数入口补进黑板界面，主工具条 f(x) 改为和批注工具条一致的函数图标，插入的函数图在黑板模式下也能稳定显示；手形工具改为“漫游”，按住即可拖动画布；日历、相机、扳手、马克笔、橡皮、选择、图形、撤销/重做、图钉统一为同一套线性描边；板中板右下角新增独立的大号缩放手柄，按住即可调整宽高；所有工具条按钮命中区整体加大，按下响应更快。下载：安装包（GitHub Release v1.0.3.2）。</p>
+            </li>'''
+          new = anchor + '\n        ' + block
+          if anchor not in s:
+              raise SystemExit('anchor not found')
+          s = s.replace(anchor, new, 1)
+          p.write_text(s, encoding='utf-8')
+          print('inserted')
+          PY
+      - name: Commit and push
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add index.html
+          git commit -m "announce: STB 1.0.3.2" || exit 0
+          git push
