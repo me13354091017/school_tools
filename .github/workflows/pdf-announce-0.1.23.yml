@@ -1,9 +1,9 @@
-name: PDF announce 0.1.24
+name: PDF announce 0.1.25
 
 on:
   push:
     paths:
-      - 'release-notes/pdf-0.1.24.md'
+      - 'release-notes/pdf-0.1.25.md'
   workflow_dispatch:
 
 permissions:
@@ -20,15 +20,13 @@ jobs:
           from pathlib import Path
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          s = s.replace('写成 .uink 文本（JSON）', '写成 .uink 文件（MessagePack 对象流，按 UInk 1.1 规范）')
-          if 'SCHOOL_TOOLS_PDF 更新 0.1.24' in s:
+          if 'SCHOOL_TOOLS_PDF 更新 0.1.25' in s:
               print('already announced')
-              p.write_text(s, encoding='utf-8')
               raise SystemExit(0)
           anchor = '<ul class="announcement-list">'
           block = '''<li class="announcement-item">
           <time datetime="2026-11-28">2026-11-28</time>
-          <p class="announcement-content">SCHOOL_TOOLS_PDF 更新 0.1.24（UInk 1.1 规范墨迹交换）：导入导出按 UInk 1.1 Beta 公开规范全部重写：.uink 不再是自编 JSON，而是规范要求的 MessagePack 对象流——开头 Header（版本 11、设备数、工作区数、页数、时间），接着设备与工作区登记，每页一个 Canvas（页 GUID、页码、图层号、白色背景 、视口），每笔一个 Ink 块（颜色、透明度、纹理、逐点坐标与宽度，荧光笔按 1:8 矩形笔尖写入），压感烘焙进每点宽度，首点绝对坐标、之后相对位移；导出时整份文档每页都写 Canvas，空白页也写，在别的软件里打开页码连续；读取端按规范容错：同页 GUID 后出现者整体替代、认不出的块跳过、Clear 块清空该页、尾部不完整丢弃最后一个对象、中间损坏保留已读部分。本版声明写入基础级、读取标准级，可与智绘教 Inkeys、ICC-CE 直接互导。其余功能同 0.1.23。下载：安装包 / 免安装压缩包（GitHub Release v0.1.24）。</p>
+          <p class="announcement-content">SCHOOL_TOOLS_PDF 更新 0.1.25（滚动与打开性能）：一、滚动和惯性滚动期间，页面与缩略图位图改走线性重采样，停下 260 毫秒才恢复高质量——整页位图动辄三四千像素宽，每帧高质量重采样是长文档掉帧的主因；二、滚出缓冲区的页面，排队中的渲染直接作废，不再白渲染整张约 20MB 的位图并占着并发名额，快速翻页时可见页出图更快；三、页面渲染并发按 CPU 核数自适应（2 到 3 路）；四、打开文档时，取页尺寸与读墨迹库并行执行，几百页课件加大墨迹库能省上百毫秒，所有页尺寸收进一次锁内算完；五、启动时线程池最小线程数抬到核数以上，取尺寸、读库、渲染首屏不再排队等线程。功能与 0.1.24 一致。下载：安装包 / 免安装压缩包（GitHub Release v0.1.25）。</p>
           </li>'''
           if anchor not in s:
               raise SystemExit('anchor not found')
@@ -41,6 +39,5 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add index.html
-          git rm -f .github/workflows/pdf-announce-0.1.24.yml || true
-          git commit -m "announce: SCHOOL_TOOLS_PDF 0.1.24" || exit 0
+          git commit -m "announce: SCHOOL_TOOLS_PDF 0.1.25" || exit 0
           git push
