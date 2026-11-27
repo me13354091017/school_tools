@@ -1,0 +1,40 @@
+name: Announce PDF 0.1.24
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/pdf-announce-0.1.24.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Patch index.html
+        run: |
+          python3 - <<'PY'
+          p = 'index.html'
+          s = open(p, encoding='utf-8').read()
+          s = s.replace('写成 .uink 文本（JSON）', '写成 .uink 文件（MessagePack 对象流，按 UInk 1.1 规范）')
+          item = '<li class="announcement-item"><time datetime="2026-11-28">2026-11-28</time><p class="announcement-content">SCHOOL_TOOLS_PDF 更新 0.1.24（UInk 1.1 规范墨迹交换）：导入导出按 UInk 1.1 Beta 公开规范全部重写：.uink 不再是自编 JSON，而是规范要求的 MessagePack 对象流\u2014\u2014开头是 Header（版本 11、设备数、工作区数、页数、时间），接着设备与工作区登记，每页一个 Canvas（页 GUID、页码、图层号、白色背景、视口），每笔一个 Ink 块（颜色、透明度、纹理、逐点坐标与宽度，荧光笔按 1:8 矩形笔尖写入），压感烘焙进每点宽度，首点写绝对、之后写相对位移；导出时整份文档每页都写 Canvas，空白页也写，在别的软件里打开页码是连续的；读取端按规范容错，同页 GUID 后出现者整体替代、认不出的块跳过、Clear 块清空该页、尾部不完整丢弃最后一个对象、中间损坏保留已读部分。本版声明写入基础级、读取标准级，可与智绘教 Inkeys、ICC-CE 直接互导。其余功能同 0.1.23。下载：安装包 / 免安装压缩包（GitHub Release v0.1.24）。</p></li>'
+          anchor = '<ul class="announcement-list">\n'
+          assert anchor in s and item not in s
+          s = s.replace(anchor, anchor + '        ' + item + '\n', 1)
+          open(p, 'w', encoding='utf-8', newline='').write(s)
+          print('patched', len(s))
+          PY
+
+      - name: Commit
+        run: |
+          git config user.name "school-tools-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add index.html
+          git rm -f .github/workflows/pdf-announce-0.1.24.yml
+          git commit -m "announce: SCHOOL_TOOLS_PDF 0.1.24"
+          git push
