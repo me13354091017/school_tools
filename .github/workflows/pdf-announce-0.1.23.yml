@@ -1,9 +1,9 @@
-name: PDF announce 0.1.23
+name: PDF announce 0.1.24
 
 on:
   push:
     paths:
-      - 'release-notes/pdf-0.1.23.md'
+      - 'release-notes/pdf-0.1.24.md'
   workflow_dispatch:
 
 permissions:
@@ -20,13 +20,15 @@ jobs:
           from pathlib import Path
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          if 'SCHOOL_TOOLS_PDF 更新 0.1.23' in s:
+          s = s.replace('写成 .uink 文本（JSON）', '写成 .uink 文件（MessagePack 对象流，按 UInk 1.1 规范）')
+          if 'SCHOOL_TOOLS_PDF 更新 0.1.24' in s:
               print('already announced')
+              p.write_text(s, encoding='utf-8')
               raise SystemExit(0)
           anchor = '<ul class="announcement-list">'
           block = '''<li class="announcement-item">
-          <time datetime="2026-11-27">2026-11-27</time>
-          <p class="announcement-content">SCHOOL_TOOLS_PDF 更新 0.1.23（激光笔与 UInk 墨迹交换）：一、新增激光笔，点浮动栏激光按钮进入，按住笔或鼠标就出红色光轨，笔停住留个光点，一秒后自动淡出，只指不写、不落墨、不进撤销、不写进 PDF，讲台上指公式不再用手指遮字；二、新增 UInk 墨迹交换格式与导入导出，浮动栏更多菜单里导出会把整份文档的批注写成 .uink 文本（JSON），换机器时导入按页还原（同页原墨迹会被替换，PDF 本身不动）；三、误迹查杀（DDB），一键扫描全文档，只清点按钮时被提升成笔事件留下的孤立小墨点，正常笔画一律不动；四、智能擦（仿 Inkeys），橡皮菜单面积擦里有开关，擦到一笔的大半直接整笔清掉，不留碎残段；五、块级懒加载，离视口两屏以外的页面挂起墨迹绘制，滚回来自动恢复，长文档更顺；六、界面更 Fluent，浮动栏与弹层圆角统一放大，主栏和更多菜单加了柔和投影。下载：安装包 / 免安装压缩包（GitHub Release v0.1.23）。</p>
+          <time datetime="2026-11-28">2026-11-28</time>
+          <p class="announcement-content">SCHOOL_TOOLS_PDF 更新 0.1.24（UInk 1.1 规范墨迹交换）：导入导出按 UInk 1.1 Beta 公开规范全部重写：.uink 不再是自编 JSON，而是规范要求的 MessagePack 对象流——开头 Header（版本 11、设备数、工作区数、页数、时间），接着设备与工作区登记，每页一个 Canvas（页 GUID、页码、图层号、白色背景 、视口），每笔一个 Ink 块（颜色、透明度、纹理、逐点坐标与宽度，荧光笔按 1:8 矩形笔尖写入），压感烘焙进每点宽度，首点绝对坐标、之后相对位移；导出时整份文档每页都写 Canvas，空白页也写，在别的软件里打开页码连续；读取端按规范容错：同页 GUID 后出现者整体替代、认不出的块跳过、Clear 块清空该页、尾部不完整丢弃最后一个对象、中间损坏保留已读部分。本版声明写入基础级、读取标准级，可与智绘教 Inkeys、ICC-CE 直接互导。其余功能同 0.1.23。下载：安装包 / 免安装压缩包（GitHub Release v0.1.24）。</p>
           </li>'''
           if anchor not in s:
               raise SystemExit('anchor not found')
@@ -39,5 +41,6 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add index.html
-          git commit -m "announce: SCHOOL_TOOLS_PDF 0.1.23" || exit 0
+          git rm -f .github/workflows/pdf-announce-0.1.24.yml || true
+          git commit -m "announce: SCHOOL_TOOLS_PDF 0.1.24" || exit 0
           git push
