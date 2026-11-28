@@ -1,5 +1,6 @@
-name: PDF announce 0.1.27
+name: PDF unannounce 0.1.27
 
+# 临时下架工作流：撤掉母站公告栏里的 0.1.27 条目并删除对应说明文件。
 on:
   push:
     paths:
@@ -10,34 +11,29 @@ permissions:
   contents: write
 
 jobs:
-  announce:
+  unannounce:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Insert announcement on top
+      - name: Remove announcement
         run: |
           python3 - <<'PY'
+          import re
           from pathlib import Path
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          if 'SCHOOL_TOOLS_PDF 更新 0.1.27' in s:
-              print('already announced')
-              raise SystemExit(0)
-          anchor = '<ul class="announcement-list">'
-          block = '''<li class="announcement-item">
-          <time datetime="2026-11-28">2026-11-28</time>
-          <p class="announcement-content">SCHOOL_TOOLS_PDF 更新 0.1.27（浮动栏外观重做与贴边隐藏）：一、整套外观照希沃白板与 ICCCE 的做法重做——栏体加高到 40、圆角放大到 12、阴影更柔和，按钮统一 34×34，选中态从原来的底部小蓝条改成「图标 + 文字 + 整格强调色填充」，选中项整格填强调色、图标与文字反白，工具名直接显示在图标下面，老配置首次启动会自动迁移成带文字；二、工具按「笔 / 形状激光更多 / 撤销闪抽」分成三组，组间加 1 像素细分隔线，一眼分出功能块；三、拖动块加高到 46 见方，九点更清晰，与栏体贴合更整齐；四、新增贴边自动隐藏：整条栏拖到窗口左右边缘 12 像素以内松手自动收起成拖动块，鼠标移上去滑出，移开 700 毫秒再收起；五、双击栏体空白处收起，点在按钮上不会误触。下载：安装包 / 免安装压缩包（GitHub Release v0.1.27）。</p>
-          </li>'''
-          if anchor not in s:
-              raise SystemExit('anchor not found')
-          s = s.replace(anchor, anchor + '\n        ' + block, 1)
-          p.write_text(s, encoding='utf-8')
-          print('inserted')
+          s2 = re.sub(r'\s*<li class="announcement-item">\s*<time datetime="2026-11-28">2026-11-28</time>\s*<p class="announcement-content">SCHOOL_TOOLS_PDF 更新 0\.1\.27.*?</p>\s*</li>', '', s, flags=re.S)
+          if s2 == s:
+              print('no block found')
+          else:
+              p.write_text(s2, encoding='utf-8')
+              print('removed')
           PY
       - name: Commit and push
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add index.html
-          git commit -m "announce: SCHOOL_TOOLS_PDF 0.1.27" || exit 0
+          git rm -f release-notes/pdf-0.1.27.md || true
+          git commit -m "announce: 下架 SCHOOL_TOOLS_PDF 0.1.27" || exit 0
           git push
