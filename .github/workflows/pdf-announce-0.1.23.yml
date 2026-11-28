@@ -1,9 +1,9 @@
-name: PDF announce 0.1.25
+name: PDF announce 0.1.26
 
 on:
   push:
     paths:
-      - 'release-notes/pdf-0.1.25.md'
+      - 'release-notes/pdf-0.1.26.md'
   workflow_dispatch:
 
 permissions:
@@ -20,13 +20,13 @@ jobs:
           from pathlib import Path
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          if 'SCHOOL_TOOLS_PDF 更新 0.1.25' in s:
+          if 'SCHOOL_TOOLS_PDF 更新 0.1.26' in s:
               print('already announced')
               raise SystemExit(0)
           anchor = '<ul class="announcement-list">'
           block = '''<li class="announcement-item">
           <time datetime="2026-11-28">2026-11-28</time>
-          <p class="announcement-content">SCHOOL_TOOLS_PDF 更新 0.1.25（滚动与打开性能）：一、滚动和惯性滚动期间，页面与缩略图位图改走线性重采样，停下 260 毫秒才恢复高质量——整页位图动辄三四千像素宽，每帧高质量重采样是长文档掉帧的主因；二、滚出缓冲区的页面，排队中的渲染直接作废，不再白渲染整张约 20MB 的位图并占着并发名额，快速翻页时可见页出图更快；三、页面渲染并发按 CPU 核数自适应（2 到 3 路）；四、打开文档时，取页尺寸与读墨迹库并行执行，几百页课件加大墨迹库能省上百毫秒，所有页尺寸收进一次锁内算完；五、启动时线程池最小线程数抬到核数以上，取尺寸、读库、渲染首屏不再排队等线程。功能与 0.1.24 一致。下载：安装包 / 免安装压缩包（GitHub Release v0.1.25）。</p>
+          <p class="announcement-content">SCHOOL_TOOLS_PDF 更新 0.1.26（浮动栏拖动与防穿透）：一、浮动栏拆成拖动块与工具条两件，36×36 圆角拖动块展开时显示九点、收起时显示当前工具的字（笔、擦、选、激），单击收起或展开，按住能拖着整条栏走；二、撞边自动换向，工具条右侧放不下时拖动块翻到右边、工具条向左展开，拖到窗口左半边也不会飞出屏幕；三、松手靠近右下预设位置（距右边、下边各 16 像素，24 像素以内）260 毫秒缓动吸附，拖动途中浮出「预设位置」提示，位置记进设置，下次打开还在原地；四、修掉点浮动栏按钮时的笔迹穿透，栏体连同 Viewbox 上下留白、拖动块本身都算进栏的输入区，起点落在栏上的笔整笔不落墨，点按钮手势带出来的墨点彻底没有了，缩放错位导致命中漏过时画布侧还有一层兜底；五、收起展开是 220 毫秒缓动滑入滑出配合淡出，不是硬切。下载：安装包 / 免安装压缩包（GitHub Release v0.1.26）。</p>
           </li>'''
           if anchor not in s:
               raise SystemExit('anchor not found')
@@ -39,5 +39,5 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add index.html
-          git commit -m "announce: SCHOOL_TOOLS_PDF 0.1.25" || exit 0
+          git commit -m "announce: SCHOOL_TOOLS_PDF 0.1.26" || exit 0
           git push
