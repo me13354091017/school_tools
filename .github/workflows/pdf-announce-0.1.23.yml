@@ -1,9 +1,9 @@
-name: PDF announce 0.1.26
+name: PDF announce 0.1.27
 
 on:
   push:
     paths:
-      - 'release-notes/pdf-0.1.26.md'
+      - 'release-notes/pdf-0.1.27.md'
   workflow_dispatch:
 
 permissions:
@@ -20,13 +20,13 @@ jobs:
           from pathlib import Path
           p = Path('index.html')
           s = p.read_text(encoding='utf-8')
-          if 'SCHOOL_TOOLS_PDF 更新 0.1.26' in s:
+          if 'SCHOOL_TOOLS_PDF 更新 0.1.27' in s:
               print('already announced')
               raise SystemExit(0)
           anchor = '<ul class="announcement-list">'
           block = '''<li class="announcement-item">
           <time datetime="2026-11-28">2026-11-28</time>
-          <p class="announcement-content">SCHOOL_TOOLS_PDF 更新 0.1.26（浮动栏拖动与防穿透）：一、浮动栏拆成拖动块与工具条两件，36×36 圆角拖动块展开时显示九点、收起时显示当前工具的字（笔、擦、选、激），单击收起或展开，按住能拖着整条栏走；二、撞边自动换向，工具条右侧放不下时拖动块翻到右边、工具条向左展开，拖到窗口左半边也不会飞出屏幕；三、松手靠近右下预设位置（距右边、下边各 16 像素，24 像素以内）260 毫秒缓动吸附，拖动途中浮出「预设位置」提示，位置记进设置，下次打开还在原地；四、修掉点浮动栏按钮时的笔迹穿透，栏体连同 Viewbox 上下留白、拖动块本身都算进栏的输入区，起点落在栏上的笔整笔不落墨，点按钮手势带出来的墨点彻底没有了，缩放错位导致命中漏过时画布侧还有一层兜底；五、收起展开是 220 毫秒缓动滑入滑出配合淡出，不是硬切。下载：安装包 / 免安装压缩包（GitHub Release v0.1.26）。</p>
+          <p class="announcement-content">SCHOOL_TOOLS_PDF 更新 0.1.27（浮动栏外观重做与贴边隐藏）：一、整套外观照希沃白板与 ICCCE 的做法重做——栏体加高到 40、圆角放大到 12、阴影更柔和，按钮统一 34×34，选中态从原来的底部小蓝条改成「图标 + 文字 + 整格强调色填充」，选中项整格填强调色、图标与文字反白，工具名直接显示在图标下面，老配置首次启动会自动迁移成带文字；二、工具按「笔 / 形状激光更多 / 撤销闪抽」分成三组，组间加 1 像素细分隔线，一眼分出功能块；三、拖动块加高到 46 见方，九点更清晰，与栏体贴合更整齐；四、新增贴边自动隐藏：整条栏拖到窗口左右边缘 12 像素以内松手自动收起成拖动块，鼠标移上去滑出，移开 700 毫秒再收起；五、双击栏体空白处收起，点在按钮上不会误触。下载：安装包 / 免安装压缩包（GitHub Release v0.1.27）。</p>
           </li>'''
           if anchor not in s:
               raise SystemExit('anchor not found')
@@ -39,5 +39,5 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add index.html
-          git commit -m "announce: SCHOOL_TOOLS_PDF 0.1.26" || exit 0
+          git commit -m "announce: SCHOOL_TOOLS_PDF 0.1.27" || exit 0
           git push
